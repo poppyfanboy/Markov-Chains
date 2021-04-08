@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "allowJs": true,
+        "outDir": "./dist/",
+        "noImplicitAny": true,
+        "strict": true,
+        "moduleResolution": "Node",
+        "sourceMap": true
+    },
+    "include": ["./src/"]
+}

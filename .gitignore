@@ -1,0 +1,11 @@
+dist/
+.vscode/
+.cache/
+
+# npm
+node_modules/
+
+# linting
+.eslintrc.json
+.prettierrc.json
+.stylelintrc
