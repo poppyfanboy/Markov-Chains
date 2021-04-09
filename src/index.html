@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="shortcut icon" href="#" />
-    <title>Markov Chains</title>
+    <title>Цепи Маркова</title>
 </head>
 
 <body>
     <div class="markov-chains-app">
         <header class="markov-chains-app__header">
-            <h1 class="markov-chains-app__header-text">Markov Chains</h1>
+            <h1 class="markov-chains-app__heading">Цепи Маркова</h1>
         </header>
         <main class="markov-chains-app__main-content">
             <div class="markov-chains-app__rendered-text-block" contenteditable="true">
@@ -19,9 +19,7 @@
             <section class="markov-chains-app__main-controls-section">
                 <h2 class="markov-chains-app__main-controls-heading">Настройки генерации</h2>
                 <div class="markov-chains-app__generate-text-block">
-                    <button class="markov-chains-app__generate-text-button">
-                        Сгенерировать текст
-                    </button>
+                    <button class="markov-chains-app__generate-text-button">Сгенерировать текст</button>
                 </div>
                 <div class="markov-chains-app__generation-settings-block">
                     <div class="markov-chains-app__generation-strategy-block">
@@ -50,12 +48,8 @@
                             <input type="text" class="markov-chains-app__output-size-input" placeholder="200" />
                         </label>
                         <select class="markov-chains-app__output-size-units-select">
-                            <option class="markov-chains-app__output-size-unit-option">
-                                слов
-                            </option>
-                            <option class="markov-chains-app__output-size-unit-option">
-                                символов
-                            </option>
+                            <option class="markov-chains-app__output-size-unit-option">слов</option>
+                            <option class="markov-chains-app__output-size-unit-option">символов</option>
                         </select>
                     </div>
                 </div>
@@ -65,12 +59,12 @@
                 <ul class="markov-chains-app__text-sources-list">
                     <li class="text-source-item markov-chains-app__text-source-item">
                         <textarea cols="80" rows="2" class="text-source-item__input-text" placeholder="Ссылка на источник или сам текст"></textarea>
-                        <div class="text-source-item__clear-text">
+                        <div class="text-source-item__clear-text-block">
                             <button class="text-source-item__clear-text-button">
                                 Очистить
                             </button>
                         </div>
-                        <div class="text-source-item__remove">
+                        <div class="text-source-item__remove-block">
                             <button class="text-source-item__remove-button">Удалить</button>
                         </div>
                         <div class="text-source-item__probability-block">
@@ -79,7 +73,6 @@
                                 <input type="range" class="text-source-item__probability-input" min="0" max="1" step="0.05" value="1" />
                             </label>
                         </div>
-
                         <div class="search-options text-source-item__search-options">
                             <div class="search-options__is-dvach-url-block">
                                 <label class="search-options__is-dvach-url-label">
@@ -118,12 +111,12 @@
                                                 <input class="dvach-search-filter__text-input" type="text" />
                                             </label>
                                             <label class="dvach-search-filter__use-regexp-label">
-                                                <span class="dvach-search-filter__use-regexp-label-text">Regex</span>
                                                 <input class="dvach-search-filter__use-regexp-checkbox" type="checkbox" />
+                                                <span class="dvach-search-filter__use-regexp-label-text">Regex</span>
                                             </label>
                                             <label class="dvach-search-filter__negate-label">
-                                                <span class="dvach-search-filter__negate-label-text">Отрицание</span>
                                                 <input class="dvach-search-filter__negate-checkbox" type="checkbox" />
+                                                <span class="dvach-search-filter__negate-label-text">Отрицание</span>
                                             </label>
                                         </div>
                                         <div class="dvach-search-filter__combinator-block">
@@ -148,12 +141,12 @@
                                                 <input class="dvach-search-filter__text-input" type="text" />
                                             </label>
                                             <label class="dvach-search-filter__use-regexp-label">
-                                                <span class="dvach-search-filter__use-regexp-label-text">Regex</span>
                                                 <input class="dvach-search-filter__use-regexp-checkbox" type="checkbox" />
+                                                <span class="dvach-search-filter__use-regexp-label-text">Regex</span>
                                             </label>
                                             <label class="dvach-search-filter__negate-label">
-                                                <span class="dvach-search-filter__negate-label-text">Отрицание</span>
                                                 <input class="dvach-search-filter__negate-checkbox" type="checkbox" />
+                                                <span class="dvach-search-filter__negate-label-text">Отрицание</span>
                                             </label>
                                         </div>
                                         <div class="dvach-search-filter__combinator-block">
@@ -200,12 +193,12 @@
                                                 <input class="dvach-search-filter__text-input" type="text" />
                                             </label>
                                             <label class="dvach-search-filter__use-regexp-label">
-                                                <span class="dvach-search-filter__use-regexp-label-text">Regex</span>
                                                 <input class="dvach-search-filter__use-regexp-checkbox" type="checkbox" />
+                                                <span class="dvach-search-filter__use-regexp-label-text">Regex</span>
                                             </label>
                                             <label class="dvach-search-filter__negate-label">
-                                                <span class="dvach-search-filter__negate-label-text">Отрицание</span>
                                                 <input class="dvach-search-filter__negate-checkbox" type="checkbox" />
+                                                <span class="dvach-search-filter__negate-label-text">Отрицание</span>
                                             </label>
                                         </div>
                                         <div class="dvach-search-filter__combinator-block">
@@ -223,28 +216,18 @@
                                     </form>
                                 </li>
                             </ul>
-                            <select class="dvach-search-options__filter-select">
-                                <option class="dvach-search-options__filter-option">Имя</option>
-                                <option class="dvach-search-options__filter-option">
-                                    Трипкод
-                                </option>
-                                <option class="dvach-search-options__filter-option">
-                                    ОП треда
-                                </option>
-                                <option class="dvach-search-options__filter-option">
-                                    Слова
-                                </option>
+                            <select class="text-source-item__dvach-filter-select">
+                                <option class="text-source-item__dvach-filter-option">Имя</option>
+                                <option class="text-source-item__dvach-filter-option">Трипкод</option>
+                                <option class="text-source-item__dvach-filter-option">ОП треда</option>
+                                <option class="text-source-item__dvach-filter-option">(Не) содержит слова</option>
                             </select>
-                            <div class="dvach-search-options__add-filter">
-                                <button class="dvach-search-options__add-filter-button">
-                                    Добавить фильтр
-                                </button>
+                            <div class="text-source-item__add-dvach-filter-block">
+                                <button class="text-source-item__add-dvach-filter-button">Добавить фильтр</button>
                             </div>
-                            <div class="dvach-search-options__switch-filters-combinators">
-                                <button class="dvach-search-options__switch-filters-combinators-button">
-                                    Соответствие по всем фильтрам / Соответствие хотя бы по
-                                    одному фильтру
-                                </button>
+                            <div class="text-source-item__switch-dvach-filters-combinators-block">
+                                <button class="text-source-item__switch-dvach-filters-combinators-button">Соответствие по всем фильтрам / Соответствие
+                                    хотя бы по одному фильтру</button>
                             </div>
                         </div>
                         <div class="text-source-item__generic-url-search-filters-block">
@@ -256,9 +239,7 @@
                     </li>
                 </ul>
                 <div class="markov-chains-app__add-new-text-source">
-                    <button class="markov-chains-app__add-new-text-source-button">
-                        Добавить источник
-                    </button>
+                    <button class="markov-chains-app__add-new-text-source-button">Добавить источник</button>
                 </div>
             </section>
         </main>
