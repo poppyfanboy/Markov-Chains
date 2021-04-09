@@ -6,7 +6,9 @@
         "noImplicitAny": true,
         "strict": true,
         "moduleResolution": "Node",
-        "sourceMap": true
+        "sourceMap": true,
+        "jsx": "react-jsx",
+        "allowSyntheticDefaultImports": true
     },
     "include": ["./src/"]
 }

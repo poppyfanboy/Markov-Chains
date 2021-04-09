@@ -9,6 +9,7 @@
                 "loose": false
             }
         ],
+        "@babel/preset-react",
         "@babel/preset-typescript"
     ],
     "ignore": ["public/*"]

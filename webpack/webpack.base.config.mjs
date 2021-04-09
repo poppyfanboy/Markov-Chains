@@ -4,7 +4,7 @@ import HtmlPlugin from 'html-webpack-plugin';
 export default {
     target: 'web',
     entry: {
-        app: './src/index.ts',
+        app: './src/index.tsx',
     },
     devServer: {
         port: 8080,
@@ -27,7 +27,7 @@ export default {
     module: {
         rules: [
             {
-                test: /\.ts$/i,
+                test: /\.tsx?$/i,
                 use: [ 'babel-loader' ],
                 exclude: /node_modules/,
             },
@@ -38,6 +38,6 @@ export default {
         ],
     },
     resolve: {
-        extensions: [ '.js', '.ts', '.d.ts', '.wasm', '.json', '.mjs' ],
+        extensions: [ '.js', '.ts', '.d.ts', '.wasm', '.json', '.mjs', '.tsx', '.jsx' ],
     },
 };
