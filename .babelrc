@@ -11,5 +11,5 @@
         ],
         "@babel/preset-typescript"
     ],
-    "ignore": ["dist/*"]
+    "ignore": ["public/*"]
 }

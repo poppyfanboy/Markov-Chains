@@ -16,29 +16,43 @@
             <div class="markov-chains-app__rendered-text-block" contenteditable="true">*Сгенерированный текст*</div>
             <section class="markov-chains-app__main-controls-section">
                 <h2 class="markov-chains-app__main-controls-heading">Настройки генерации</h2>
-                <div class="markov-chains-app__generate-text">
+                <div class="markov-chains-app__generate-text-block">
                     <button class="markov-chains-app__generate-text-button">
                         Сгенерировать текст
                     </button>
                 </div>
-                <div class="markov-chains-app__generation-strategy-block">
-                    <input type="radio" class="markov-chains-app__generation-strategy-input" name="generation-strategy"
-                        value="by-words" id="generation-strategy-by-words" checked />
-                    <label for="generation-strategy-by-words" class="markov-chains-app__generation-strategy-label">По
-                        словам</label>
+                <div class="markov-chains-app__generation-settings-block">
+                    <div class="markov-chains-app__generation-strategy-block">
+                        <input type="radio" class="markov-chains-app__generation-strategy-input"
+                            name="generation-strategy" value="by-words" id="generation-strategy-by-words" checked />
+                        <label for="generation-strategy-by-words"
+                            class="markov-chains-app__generation-strategy-label">По
+                            словам</label>
 
-                    <input type="radio" class="markov-chains-app__generation-strategy-input" name="generation-strategy"
-                        value="by-n-grams" id="generation-strategy-by-n-grams" />
-                    <label for="generation-strategy-by-n-grams" class="markov-chains-app__generation-strategy-label">По
-                        N-граммам</label>
+                        <input type="radio" class="markov-chains-app__generation-strategy-input"
+                            name="generation-strategy" value="by-n-grams" id="generation-strategy-by-n-grams" />
+                        <label for="generation-strategy-by-n-grams"
+                            class="markov-chains-app__generation-strategy-label">По
+                            N-граммам</label>
 
-                    <input type="radio" class="markov-chains-app__generation-strategy-input" name="generation-strategy"
-                        value="by-parts-of-speech" id="generation-strategy-by-parts-of-speech" />
-                    <label for="generation-strategy-by-parts-of-speech"
-                        class="markov-chains-app__generation-strategy-label">По частям речи</label>
-
-                    <span class="markov-chains-app__n-gram-size-span">Размер N-грамм: </span>
-                    <input type="number" class="markov-chains-app__n-gram-size-input" min="0" value="0" />
+                        <input type="radio" class="markov-chains-app__generation-strategy-input"
+                            name="generation-strategy" value="by-parts-of-speech"
+                            id="generation-strategy-by-parts-of-speech" />
+                        <label for="generation-strategy-by-parts-of-speech"
+                            class="markov-chains-app__generation-strategy-label">По частям речи</label>
+                    </div>
+                    <div class="markov-chains-app__n-gram-size-block">
+                        <span class="markov-chains-app__n-gram-size-span">Размер N-грамм: </span>
+                        <input type="number" class="markov-chains-app__n-gram-size-input" min="0" value="0" />
+                    </div>
+                    <div class="markov-chains-app__output-size-block">
+                        <span class="markov-chains-app__output-size-span">Размер выходного текста</span>
+                        <input type="text" class="markov-chains-app__output-size-input" />
+                        <select class="markov-chains-app__output-size-units-select">
+                            <option class="markov-chains-app__output-size-unit-option">слов</option>
+                            <option class="markov-chains-app__output-size-unit-option">символов</option>
+                        </select>
+                    </div>
                 </div>
             </section>
             <section class="markov-chains-app__text-sources-section">
@@ -58,18 +72,27 @@
                         </div>
 
                         <div class="search-options text-source-item__search-options">
-                            <input type="checkbox" class="search-options__is-dvach-url"
-                                id="search-option-is-dvach-url" />
-                            <label for="search-option-is-dvach-url" class="search-options__is-dvach-url-label">Ссылка на
-                                двач</label>
-
-                            <input type="checkbox" class="search-options__is-generic-url"
-                                id="search-option-is-generic-url" />
-                            <label for="search-option-is-generic-url"
-                                class="search-options__is-generic-url-label">Произвольная ссылка</label>
-
-                            <span class="search-options__text-source-max-length-span">Максимальная длина: </span>
-                            <input type="text" class="search-options__text-source-max-length-input" />
+                            <div class="search-options__is-dvach-url-block">
+                                <input type="checkbox" class="search-options__is-dvach-url-checkbox"
+                                    id="search-option-is-dvach-url" />
+                                <label for="search-option-is-dvach-url"
+                                    class="search-options__is-dvach-url-label">Ссылка на
+                                    двач</label>
+                            </div>
+                            <div class="search-options__is-generic-url-block">
+                                <input type="checkbox" class="search-options__is-generic-url-checkbox"
+                                    id="search-option-is-generic-url" />
+                                <label for="search-option-is-generic-url"
+                                    class="search-options__is-generic-url-label">Произвольная ссылка</label>
+                            </div>
+                            <div class="search-options__text-source-max-length-block">
+                                <span class="search-options__text-source-max-length-span">Максимальная длина: </span>
+                                <input type="text" class="search-options__text-source-max-length-input" />
+                                <select class="search-options__text-source-max-length-units-select">
+                                    <option class="search-options__text-source-max-length-unit-option">слов</option>
+                                    <option class="search-options__text-source-max-length-unit-option">символов</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="text-source-item__dvach-search-filters-block">
                             <ul class="text-source-item__dvach-search-filters-list">
@@ -77,14 +100,12 @@
                                     <div class="dvach-search-filter__options-block">
                                         <span class="dvach-search-filter__name">Имя: </span>
                                         <input class="dvach-search-filter__text-input" type="text" />
-                                        <!-- Использовать регекспы? -->
-                                        <input class="dvach-search-filter__use-regexp-input" type="checkbox" />
-                                        <!-- Отрицание фильтра  -->
-                                        <input class="dvach-search-filter__negate-input" type="checkbox" />
+                                        <input class="dvach-search-filter__use-regexp-checkbox" type="checkbox" />
+                                        <input class="dvach-search-filter__negate-checkbox" type="checkbox" />
                                     </div>
                                     <div class="dvach-search-filter__combinator-block">
                                         <select class="dvach-search-filter__combinator-select" size="3">
-                                            <option class="dvach-search-filter__combinator-option">И</option>
+                                            <option selected class="dvach-search-filter__combinator-option">И</option>
                                             <option class="dvach-search-filter__combinator-option">ИЛИ</option>
                                         </select>
                                     </div>
@@ -93,10 +114,8 @@
                                     <div class="dvach-search-filter__options-block">
                                         <span class="dvach-search-filter__name">Трипкод: </span>
                                         <input class="dvach-search-filter__text-input" type="text" />
-                                        <!-- Использовать регекспы? -->
-                                        <input class="dvach-search-filter__use-regexp-input" type="checkbox" />
-                                        <!-- Отрицание фильтра  -->
-                                        <input class="dvach-search-filter__negate-input" type="checkbox" />
+                                        <input class="dvach-search-filter__use-regexp-checkbox" type="checkbox" />
+                                        <input class="dvach-search-filter__negate-checkbox" type="checkbox" />
                                     </div>
                                     <div class="dvach-search-filter__combinator-block">
                                         <select class="dvach-search-filter__combinator-select" size="3">
@@ -108,7 +127,7 @@
                                 <li class="dvach-search-filter text-source-item__dvach-search-filter">
                                     <div class="dvach-search-filter__options-block">
                                         <span class="dvach-search-filter__name">Является ОПом: </span>
-                                        <input class="dvach-search-filter__checkbox-input" type="checkbox" />
+                                        <input class="dvach-search-filter__checkbox-checkbox" type="checkbox" />
                                     </div>
                                     <div class="dvach-search-filter__combinator-block">
                                         <select class="dvach-search-filter__combinator-select" size="3">
@@ -121,10 +140,8 @@
                                     <div class="dvach-search-filter__options-block">
                                         <span class="dvach-search-filter__name">Содержит слова: </span>
                                         <input class="dvach-search-filter__text-input" type="text" />
-                                        <!-- Использовать регекспы? -->
-                                        <input class="dvach-search-filter__use-regexp-input" type="checkbox" />
-                                        <!-- Отрицание фильтра  -->
-                                        <input class="dvach-search-filter__negate-input" type="checkbox" />
+                                        <input class="dvach-search-filter__use-regexp-checkbox" type="checkbox" />
+                                        <input class="dvach-search-filter__negate-checkbox" type="checkbox" />
                                     </div>
                                     <div class="dvach-search-filter__combinator-block">
                                         <select class="dvach-search-filter__combinator-select" size="3">
@@ -162,7 +179,7 @@
                         <div class="text-source-item__generic-url-search-filters-block">
                             <span class="text-source-item__generic-url-query-selector-span">Селектор для блока с
                                 текстом: </span>
-                            <input class="text-source-item__generic-url-query-selector-input" type="text">
+                            <input class="text-source-item__generic-url-query-selector-input" type="text" />
                         </div>
                     </li>
                 </ul>

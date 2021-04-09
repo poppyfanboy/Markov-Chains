@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "allowJs": true,
-        "outDir": "./dist/",
+        "outDir": "./public/",
         "noImplicitAny": true,
         "strict": true,
         "moduleResolution": "Node",
