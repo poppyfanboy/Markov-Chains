@@ -45,6 +45,8 @@
         "webpack-merge": "^5.7.3"
     },
     "dependencies": {
+        "mobx": "^6.2.0",
+        "mobx-react": "^7.1.0",
         "react": "^17.0.2",
         "react-dom": "^17.0.2"
     }

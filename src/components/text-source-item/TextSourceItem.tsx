@@ -3,7 +3,8 @@ import './text-source-item.pcss';
 import React from 'react';
 
 import SearchOptions from '../search-options/SearchOptions';
-import DvachSearchFilter, { DvachSearchFilterType } from '../dvach-search-filter/DvachSearchFilter';
+import { dvachFilterFactory, DvachFilterType } from '../../model/DvachFilterModel';
+import DvachSearchFilter from '../dvach-search-filter/DvachSearchFilter';
 
 const TextSourceItem: React.FunctionComponent = () =>
     <li className="text-source-item markov-chains-app__text-source-item">
@@ -40,10 +41,12 @@ const TextSourceItem: React.FunctionComponent = () =>
 
         <div className="text-source-item__dvach-search-filters-block">
             <ul className="text-source-item__dvach-search-filters-list">
-                <DvachSearchFilter filterType={DvachSearchFilterType.NAME} />
-                <DvachSearchFilter filterType={DvachSearchFilterType.TRIPCODE} />
-                <DvachSearchFilter filterType={DvachSearchFilterType.IS_THREAD_OP} />
-                <DvachSearchFilter filterType={DvachSearchFilterType.POST_CONTAINS_WORDS} />
+                <DvachSearchFilter filter={dvachFilterFactory(DvachFilterType.NAME)} />
+                <DvachSearchFilter filter={dvachFilterFactory(DvachFilterType.TRIPCODE)} />
+                <DvachSearchFilter filter={dvachFilterFactory(DvachFilterType.IS_THREAD_OP)} />
+                <DvachSearchFilter
+                    filter={dvachFilterFactory(DvachFilterType.POST_CONTAINS_WORDS)}
+                />
             </ul>
             <select className="text-source-item__dvach-filter-select">
                 <option className="text-source-item__dvach-filter-option">Имя</option>
@@ -72,6 +75,7 @@ const TextSourceItem: React.FunctionComponent = () =>
                 <input className="text-source-item__generic-url-query-selector-input" type="text" />
             </label>
         </div>
-    </li>;
+    </li>
+;
 
 export default TextSourceItem;

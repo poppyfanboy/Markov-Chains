@@ -2,29 +2,17 @@ import './dvach-search-filter.pcss';
 
 import React from 'react';
 
-export enum DvachSearchFilterType {
-    NAME,
-    TRIPCODE,
-    IS_THREAD_OP,
-    POST_CONTAINS_WORDS,
-}
-
-const dvachSearchFiltersNames: Record<DvachSearchFilterType, string> = {
-    [DvachSearchFilterType.NAME]: 'Имя',
-    [DvachSearchFilterType.TRIPCODE]: 'Трипкод',
-    [DvachSearchFilterType.IS_THREAD_OP]: 'Является ОПом треда',
-    [DvachSearchFilterType.POST_CONTAINS_WORDS]: 'Пост содержит слова',
-};
+import { DvachFilter, DvachFilterType } from '../../model/DvachFilterModel';
 
 const DvachSearchFilterOptions: React.FunctionComponent<{
-    filterType: DvachSearchFilterType;
+    filter: DvachFilter
 }> = props => {
-    if (props.filterType == DvachSearchFilterType.IS_THREAD_OP) {
+    if (props.filter.type == DvachFilterType.IS_THREAD_OP) {
         return (
             <div className="dvach-search-filter__options-block">
                 <label className="dvach-search-filter__checkbox-input-label">
                     <span className="dvach-search-filter__name-label-text">
-                        {dvachSearchFiltersNames[props.filterType]}
+                        {props.filter.name}
                     </span>
                     <input className="dvach-search-filter__checkbox-input" type="checkbox" />
                 </label>
@@ -36,7 +24,7 @@ const DvachSearchFilterOptions: React.FunctionComponent<{
         <div className="dvach-search-filter__options-block">
             <label className="dvach-search-filter__text-input-label">
                 <span className="dvach-search-filter__name-label-text">
-                    {dvachSearchFiltersNames[props.filterType]}
+                    {props.filter.name}
                 </span>
                 <input className="dvach-search-filter__text-input" type="text" />
             </label>
@@ -53,12 +41,12 @@ const DvachSearchFilterOptions: React.FunctionComponent<{
 };
 
 const DvachSearchFilter: React.FunctionComponent<{
-    filterType: DvachSearchFilterType;
+    filter: DvachFilter
 }> = props => {
     return (
         <li className="dvach-search-filter text-source-item__dvach-search-filter">
             <form>
-                <DvachSearchFilterOptions filterType={props.filterType} />
+                <DvachSearchFilterOptions filter={props.filter} />
                 <div className="dvach-search-filter__combinator-block">
                     <label className="dvach-search-filter__combinator-label">
                         <input
