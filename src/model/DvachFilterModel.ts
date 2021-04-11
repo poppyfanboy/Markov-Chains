@@ -1,9 +1,23 @@
 import { DvachPostModel } from './DvachPostModel';
 
+import { makeObservable, observable } from 'mobx';
+
 // incremented every time a new filter is created
 let filterId = 0;
 
-export type DvachFilter = DvachFilterModel<TextFilterInput> | DvachFilterModel<CheckboxFilterInput>;
+export type FilterTextOptionModel = {
+    text: string;
+    isRegex: boolean;
+    isNegated: boolean;
+};
+
+export type FilterCheckboxOptionModel = {
+    checked: boolean;
+};
+
+export type DvachFilter =
+    | DvachFilterModel<FilterTextOptionModel>
+    | DvachFilterModel<FilterCheckboxOptionModel>;
 
 export enum DvachFilterType {
     NAME,
@@ -17,27 +31,17 @@ export enum DvachFilterCombinator {
     OR,
 }
 
-export type TextFilterInput = {
-    text: string;
-    isRegex: boolean;
-    isNegated: boolean;
-};
-
-export type CheckboxFilterInput = {
-    checked: boolean;
-};
-
 export function dvachFilterFactory(
     type: DvachFilterType,
-    combinator: DvachFilterCombinator = DvachFilterCombinator.AND,
+    combinator = DvachFilterCombinator.AND,
 ): DvachFilter {
     switch (type) {
     case DvachFilterType.NAME:
-        return new DvachFilterModel<TextFilterInput>(
+        return new DvachFilterModel<FilterTextOptionModel>(
             type,
             'Имя',
             filterId++,
-            (parameter: TextFilterInput, post: DvachPostModel) => false,
+            (parameter: FilterTextOptionModel, post: DvachPostModel) => false,
             {
                 text: '',
                 isRegex: false,
@@ -46,11 +50,11 @@ export function dvachFilterFactory(
             combinator,
         );
     case DvachFilterType.TRIPCODE:
-        return new DvachFilterModel<TextFilterInput>(
+        return new DvachFilterModel<FilterTextOptionModel>(
             type,
             'Трипкод',
             filterId++,
-            (parameter: TextFilterInput, post: DvachPostModel) => false,
+            (parameter: FilterTextOptionModel, post: DvachPostModel) => false,
             {
                 text: '',
                 isRegex: false,
@@ -59,11 +63,11 @@ export function dvachFilterFactory(
             combinator,
         );
     case DvachFilterType.POST_CONTAINS_WORDS:
-        return new DvachFilterModel<TextFilterInput>(
+        return new DvachFilterModel<FilterTextOptionModel>(
             type,
             'Содержит слова',
             filterId++,
-            (parameter: TextFilterInput, post: DvachPostModel) => false,
+            (parameter: FilterTextOptionModel, post: DvachPostModel) => false,
             {
                 text: '',
                 isRegex: false,
@@ -72,11 +76,11 @@ export function dvachFilterFactory(
             combinator,
         );
     case DvachFilterType.IS_THREAD_OP:
-        return new DvachFilterModel<CheckboxFilterInput>(
+        return new DvachFilterModel<FilterCheckboxOptionModel>(
             type,
             'Является ОПом треда',
             filterId++,
-            (parameter: CheckboxFilterInput, post: DvachPostModel) => false,
+            (parameter: FilterCheckboxOptionModel, post: DvachPostModel) => false,
             {
                 checked: false,
             },
@@ -105,6 +109,11 @@ export class DvachFilterModel<TParameter> {
         parameter: TParameter,
         combinator: DvachFilterCombinator,
     ) {
+        makeObservable(this, {
+            parameter: observable,
+            combinator: observable,
+        });
+
         this._type = type;
         this._name = name;
         this._id = id;

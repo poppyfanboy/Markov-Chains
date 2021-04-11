@@ -1,6 +1,8 @@
 import { DvachFilter, DvachFilterType, dvachFilterFactory } from './DvachFilterModel';
 import { TextLength, TextLengthUnit } from './util/TextLength';
 
+import { action, makeObservable, observable } from 'mobx';
+
 export class TextSourceModel {
     textContent = '';
     maxTextLengthToFetch: TextLength = new TextLength(10_000, TextLengthUnit.WORD);
@@ -8,6 +10,20 @@ export class TextSourceModel {
     private _isGenericUrl = false;
     private _probability = 1;
     private dvachFilters: DvachFilter[] = [];
+
+    constructor(textContent: string) {
+        makeObservable(this, {
+            textContent: observable,
+            maxTextLengthToFetch: observable,
+            isDvachUrl: action,
+            isGenericUrl: action,
+            probability: action,
+            addDvachFilter: action,
+            removeDvachFilter: action,
+        });
+
+        this.textContent = textContent;
+    }
 
     addDvachFilter(type: DvachFilterType): void {
         this.dvachFilters.push(dvachFilterFactory(type));

@@ -1,5 +1,3 @@
-import './generation-settings.pcss';
-
 import React from 'react';
 
 const GenerationSettings: React.FunctionComponent = () =>
