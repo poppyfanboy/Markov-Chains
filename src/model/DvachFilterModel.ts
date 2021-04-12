@@ -1,6 +1,6 @@
-import { DvachPostModel } from './DvachPostModel';
-
 import { makeObservable, observable } from 'mobx';
+
+import { DvachPostModel } from './DvachPostModel';
 
 // incremented every time a new filter is created
 let filterId = 0;
@@ -15,7 +15,7 @@ export type FilterCheckboxOptionModel = {
     checked: boolean;
 };
 
-export type DvachFilter =
+export type DvachFilterGeneric =
     | DvachFilterModel<FilterTextOptionModel>
     | DvachFilterModel<FilterCheckboxOptionModel>;
 
@@ -24,6 +24,23 @@ export enum DvachFilterType {
     TRIPCODE,
     IS_THREAD_OP,
     POST_CONTAINS_WORDS,
+}
+const filterTypesArray = [
+    DvachFilterType.NAME,
+    DvachFilterType.TRIPCODE,
+    DvachFilterType.IS_THREAD_OP,
+    DvachFilterType.POST_CONTAINS_WORDS,
+];
+const filterHtmlValuesArray = [ 'name', 'tripcode', 'is-op', 'contains-words' ];
+
+export function mapFilterTypeToHtmlValue(type: DvachFilterType): string {
+    const index = Math.max(filterTypesArray.findIndex(element => element == type), 0);
+    return filterHtmlValuesArray[index];
+}
+
+export function mapHtmlValueToFilterType(value: string): DvachFilterType {
+    const index = Math.max(filterHtmlValuesArray.findIndex(element => element == value), 0);
+    return filterTypesArray[index];
 }
 
 export enum DvachFilterCombinator {
@@ -34,7 +51,7 @@ export enum DvachFilterCombinator {
 export function dvachFilterFactory(
     type: DvachFilterType,
     combinator = DvachFilterCombinator.AND,
-): DvachFilter {
+): DvachFilterGeneric {
     switch (type) {
     case DvachFilterType.NAME:
         return new DvachFilterModel<FilterTextOptionModel>(

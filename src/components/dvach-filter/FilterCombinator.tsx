@@ -1,26 +1,28 @@
+import { action } from 'mobx';
+import { observer } from 'mobx-react';
 import React, { useCallback, useRef } from 'react';
 
-import { DvachFilterCombinator } from '../../../model/DvachFilterModel';
+import { DvachFilterCombinator, DvachFilterGeneric } from '../../model/DvachFilterModel';
 
 const FilterCombinator: React.FunctionComponent<{
-    combinator: DvachFilterCombinator;
-    onCombinatorChange: (newValue: DvachFilterCombinator) => void;
-}> = props => {
+    filter: DvachFilterGeneric;
+}> = observer(props => {
+    const { filter } = props;
+
     const andCombinatorRef: React.RefObject<HTMLInputElement> = useRef(null);
     const orCombinatorRef: React.RefObject<HTMLInputElement> = useRef(null);
-
-    const changeCombinator = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
+    const updateCombinator = useCallback(
+        action((event: React.ChangeEvent<HTMLInputElement>) => {
             if (!event.target.checked) {
                 return;
             }
             if (event.target == andCombinatorRef.current) {
-                props.onCombinatorChange(DvachFilterCombinator.AND);
+                filter.combinator = DvachFilterCombinator.AND;
             } else if (event.target == orCombinatorRef.current) {
-                props.onCombinatorChange(DvachFilterCombinator.OR);
+                filter.combinator = DvachFilterCombinator.OR;
             }
-        },
-        [ props.onCombinatorChange ],
+        }),
+        [ filter ],
     );
 
     return (
@@ -30,8 +32,8 @@ const FilterCombinator: React.FunctionComponent<{
                     type="radio"
                     name="dvach-search-filter-combinator"
                     className="dvach-search-filter__combinator-input"
-                    checked={props.combinator == DvachFilterCombinator.AND}
-                    onChange={changeCombinator}
+                    checked={filter.combinator == DvachFilterCombinator.AND}
+                    onChange={updateCombinator}
                     ref={andCombinatorRef}
                 />
                 <span className="dvach-search-filter__combinator-label-text">И</span>
@@ -41,14 +43,14 @@ const FilterCombinator: React.FunctionComponent<{
                     type="radio"
                     name="dvach-search-filter-combinator"
                     className="dvach-search-filter__combinator-input"
-                    checked={props.combinator == DvachFilterCombinator.OR}
-                    onChange={changeCombinator}
+                    checked={filter.combinator == DvachFilterCombinator.OR}
+                    onChange={updateCombinator}
                     ref={orCombinatorRef}
                 />
                 <span className="dvach-search-filter__combinator-label-text">ИЛИ</span>
             </label>
         </div>
     );
-};
+});
 
 export default FilterCombinator;

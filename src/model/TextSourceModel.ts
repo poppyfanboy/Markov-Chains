@@ -1,26 +1,30 @@
-import { DvachFilter, DvachFilterType, dvachFilterFactory } from './DvachFilterModel';
+import { DvachFilterGeneric, DvachFilterType, dvachFilterFactory } from './DvachFilterModel';
 import { TextLength, TextLengthUnit } from './util/TextLength';
 
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 export class TextSourceModel {
     textContent = '';
     maxTextLengthToFetch: TextLength = new TextLength(10_000, TextLengthUnit.WORD);
+    dvachFilters: DvachFilterGeneric[] = [];
     private _isDvachUrl = false;
     private _isGenericUrl = false;
     private _probability = 1;
-    private dvachFilters: DvachFilter[] = [];
 
-    constructor(textContent: string) {
+    constructor(textContent = '') {
         makeObservable(this, {
             textContent: observable,
             maxTextLengthToFetch: observable,
-            isDvachUrl: action,
-            isGenericUrl: action,
-            probability: action,
+            dvachFilters: observable.shallow,
+            _isDvachUrl: observable,
+            _isGenericUrl: observable,
+            _probability: observable,
+            isDvachUrl: computed,
+            isGenericUrl: computed,
+            probability: computed,
             addDvachFilter: action,
             removeDvachFilter: action,
-        });
+        } as any);
 
         this.textContent = textContent;
     }
@@ -41,7 +45,7 @@ export class TextSourceModel {
         return this._probability;
     }
 
-    set probability(value: number) {
+    setProbability(value: number): void {
         this._probability = Math.min(Math.max(0, value), 1);
     }
 
@@ -49,7 +53,7 @@ export class TextSourceModel {
         return this._isDvachUrl;
     }
 
-    set isDvachUrl(value: boolean) {
+    setIsDvachUrl(value: boolean): void {
         this._isDvachUrl = value;
         if (this._isDvachUrl && this._isGenericUrl) {
             this._isGenericUrl = false;
@@ -60,7 +64,7 @@ export class TextSourceModel {
         return this._isGenericUrl;
     }
 
-    set isGenericUrl(value: boolean) {
+    setIsGenericUrl(value: boolean): void {
         this._isGenericUrl = value;
         if (this._isGenericUrl && this._isDvachUrl) {
             this._isDvachUrl = false;
