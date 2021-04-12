@@ -4,15 +4,15 @@ import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
-import SearchOptions from '../search-options/SearchOptions';
-import { TextSourceModel } from '../../model/TextSourceModel';
+import SearchOptions from '@components/search-options/SearchOptions';
+import { TextSourceModel } from '@model/TextSourceModel';
 import {
     DvachFilterCombinator,
     DvachFilterType,
     mapFilterTypeToHtmlValue,
     mapHtmlValueToFilterType,
-} from '../../model/DvachFilterModel';
-import DvachFilter from '../dvach-filter/DvachFilter';
+} from '@model/DvachFilterModel';
+import DvachFilter from '@components/dvach-filter/DvachFilter';
 
 const TextSource: React.FunctionComponent<{
     textSource: TextSourceModel;

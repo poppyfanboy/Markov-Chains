@@ -5,8 +5,8 @@ import { observer } from 'mobx-react';
 import { useCallback, useRef } from 'react';
 import { action } from 'mobx';
 
-import { TextSourceModel } from '../../model/TextSourceModel';
-import { TextLength, TextLengthUnit } from '../../model/util/TextLength';
+import { TextSourceModel } from '@model/TextSourceModel';
+import { TextLength, TextLengthUnit } from '@model/util/TextLength';
 
 /**
  * Настройки, связанные с содержанием указанного источника. Сюда не входит

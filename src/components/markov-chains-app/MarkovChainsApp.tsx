@@ -3,9 +3,9 @@ import './markov-chains-app.pcss';
 import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 
-import TextSource from '../text-source-item/TextSource';
-import GenerationSettings from '../generation-settings/GenerationSettings';
-import { TextSourceModel } from '../../model/TextSourceModel';
+import TextSource from '@components/text-source-item/TextSource';
+import GenerationSettings from '@components/generation-settings/GenerationSettings';
+import { TextSourceModel } from '@model/TextSourceModel';
 
 const MarkovChainsApp: React.FunctionComponent = observer(() => {
     const [ textSource ] = useState(new TextSourceModel());

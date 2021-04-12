@@ -2,7 +2,7 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 
-import { DvachFilterModel, FilterCheckboxOptionModel } from '../../model/DvachFilterModel';
+import { DvachFilterModel, FilterCheckboxOptionModel } from '@model/DvachFilterModel';
 
 const FilterCheckboxOption: React.FunctionComponent<{
     filter: DvachFilterModel<FilterCheckboxOptionModel>;
