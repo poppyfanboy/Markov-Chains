@@ -9,3 +9,4 @@ node_modules/
 .eslintrc.json
 .prettierrc.json
 .stylelintrc
+tsconfig.json
