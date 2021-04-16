@@ -6,8 +6,7 @@ import { DvachFilterModel, FilterCheckboxOptionModel } from '@model/DvachFilterM
 
 const FilterCheckboxOption: React.FunctionComponent<{
     filter: DvachFilterModel<FilterCheckboxOptionModel>;
-}> = observer(props => {
-    const { filter } = props;
+}> = observer(({ filter }) => {
     const updateIsChecked = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             filter.parameter.checked = event.target.checked;

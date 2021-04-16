@@ -15,11 +15,10 @@ import { TextLength, TextLengthUnit } from '@model/util/TextLength';
  */
 const SearchOptions: React.FunctionComponent<{
     textSource: TextSourceModel;
-}> = observer(props => {
+}> = observer(({ textSource }) => {
     const wordUnitOptionRef: React.RefObject<HTMLOptionElement> = useRef(null);
     const charUnitOptionRef: React.RefObject<HTMLOptionElement> = useRef(null);
 
-    const { textSource } = props;
     const updateIsDvachUrl = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             textSource.setIsDvachUrl(event.target.checked);

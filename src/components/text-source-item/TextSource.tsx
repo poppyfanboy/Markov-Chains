@@ -13,12 +13,11 @@ import {
     mapHtmlValueToFilterType,
 } from '@model/DvachFilterModel';
 import DvachFilter from '@components/dvach-filter/DvachFilter';
+import { DvachFilterGeneric } from '../../model/DvachFilterModel';
 
 const TextSource: React.FunctionComponent<{
     textSource: TextSourceModel;
-}> = observer(props => {
-    const { textSource } = props;
-
+}> = observer(({ textSource }) => {
     const updateProbability = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             textSource.setProbability(event.target.valueAsNumber);
@@ -44,6 +43,13 @@ const TextSource: React.FunctionComponent<{
             textSource.addDvachFilter(filterToAdd);
         }),
         [ textSource, filterToAdd ],
+    );
+
+    const removeFilter = useCallback(
+        action((filter: DvachFilterGeneric) => {
+            textSource.removeDvachFilter(filter.id);
+        }),
+        [ textSource ],
     );
 
     const toggleFiltersCombinators = useCallback(
@@ -143,7 +149,11 @@ const TextSource: React.FunctionComponent<{
             >
                 <ul className="text-source-item__dvach-search-filters-list">
                     {textSource.dvachFilters.map(filter =>
-                        <DvachFilter filter={filter} key={filter.id} />,
+                        <DvachFilter
+                            filter={filter}
+                            key={filter.id}
+                            onFilterRemove={removeFilter}
+                        />,
                     )}
                 </ul>
                 <select

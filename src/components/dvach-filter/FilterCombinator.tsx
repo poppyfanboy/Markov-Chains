@@ -6,9 +6,7 @@ import { DvachFilterCombinator, DvachFilterGeneric } from '@model/DvachFilterMod
 
 const FilterCombinator: React.FunctionComponent<{
     filter: DvachFilterGeneric;
-}> = observer(props => {
-    const { filter } = props;
-
+}> = observer(({ filter }) => {
     const andCombinatorRef: React.RefObject<HTMLInputElement> = useRef(null);
     const orCombinatorRef: React.RefObject<HTMLInputElement> = useRef(null);
     const updateCombinator = useCallback(

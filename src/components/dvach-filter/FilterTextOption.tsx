@@ -6,34 +6,34 @@ import { DvachFilterModel, FilterTextOptionModel } from '@model/DvachFilterModel
 
 const FilterTextOption: React.FunctionComponent<{
     filter: DvachFilterModel<FilterTextOptionModel>;
-}> = observer(props => {
+}> = observer(({ filter }) => {
     const updateText = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
-            props.filter.parameter.text = event.target.value;
+            filter.parameter.text = event.target.value;
         }),
-        [ props.filter ],
+        [ filter ],
     );
     const updateIsRegex = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
-            props.filter.parameter.isRegex = event.target.checked;
+            filter.parameter.isRegex = event.target.checked;
         }),
-        [ props.filter ],
+        [ filter ],
     );
     const updateIsNegated = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
-            props.filter.parameter.isNegated = event.target.checked;
+            filter.parameter.isNegated = event.target.checked;
         }),
-        [ props.filter ],
+        [ filter ],
     );
 
     return (
         <div className="dvach-search-filter__options-block">
             <label className="dvach-search-filter__text-input-label">
-                <span className="dvach-search-filter__name-label-text">{props.filter.name}</span>
+                <span className="dvach-search-filter__name-label-text">{filter.name}</span>
                 <input
                     className="dvach-search-filter__text-input"
                     type="text"
-                    value={props.filter.parameter.text}
+                    value={filter.parameter.text}
                     onInput={updateText}
                 />
             </label>
@@ -41,7 +41,7 @@ const FilterTextOption: React.FunctionComponent<{
                 <input
                     className="dvach-search-filter__use-regexp-checkbox"
                     type="checkbox"
-                    checked={props.filter.parameter.isRegex}
+                    checked={filter.parameter.isRegex}
                     onChange={updateIsRegex}
                 />
                 <span className="dvach-search-filter__use-regexp-label-text">Regex</span>
@@ -50,7 +50,7 @@ const FilterTextOption: React.FunctionComponent<{
                 <input
                     className="dvach-search-filter__negate-checkbox"
                     type="checkbox"
-                    checked={props.filter.parameter.isNegated}
+                    checked={filter.parameter.isNegated}
                     onChange={updateIsNegated}
                 />
                 <span className="dvach-search-filter__negate-label-text">Отрицание</span>
