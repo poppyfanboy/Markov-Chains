@@ -2,11 +2,12 @@ import './search-options.pcss';
 
 import React from 'react';
 import { observer } from 'mobx-react';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { action } from 'mobx';
 
 import { TextSourceModel } from '@model/TextSourceModel';
-import { TextLength, TextLengthUnit } from '@model/util/TextLength';
+import { TextLengthUnit } from '@model/TextLengthInputModel';
+import TextLengthInput from '@components/text-length-input/TextLengthInput';
 
 /**
  * Настройки, связанные с содержанием указанного источника. Сюда не входит
@@ -16,9 +17,6 @@ import { TextLength, TextLengthUnit } from '@model/util/TextLength';
 const SearchOptions: React.FunctionComponent<{
     textSource: TextSourceModel;
 }> = observer(({ textSource }) => {
-    const wordUnitOptionRef: React.RefObject<HTMLOptionElement> = useRef(null);
-    const charUnitOptionRef: React.RefObject<HTMLOptionElement> = useRef(null);
-
     const updateIsDvachUrl = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             textSource.setIsDvachUrl(event.target.checked);
@@ -28,29 +26,6 @@ const SearchOptions: React.FunctionComponent<{
     const updateIsGenericUrl = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             textSource.setIsGenericUrl(event.target.checked);
-        }),
-        [ textSource ],
-    );
-    const updateMaxLength = useCallback(
-        action((event: React.ChangeEvent<HTMLInputElement>) => {
-            let parsedNumber = Number.parseInt(event.target.value, 10);
-            if (Number.isNaN(parsedNumber)) {
-                parsedNumber = 0;
-            }
-            textSource.maxTextLengthToFetch = new TextLength(
-                parsedNumber,
-                textSource.maxTextLengthToFetch.unit,
-            );
-        }),
-        [ textSource ],
-    );
-    const updateLengthUnit = useCallback(
-        action((event: React.ChangeEvent<HTMLSelectElement>) => {
-            const count = textSource.maxTextLengthToFetch.count;
-            textSource.maxTextLengthToFetch = new TextLength(
-                count,
-                event.target.value == 'words' ? TextLengthUnit.WORD : TextLengthUnit.CHAR,
-            );
         }),
         [ textSource ],
     );
@@ -81,44 +56,11 @@ const SearchOptions: React.FunctionComponent<{
                     </span>
                 </label>
             </div>
-            <div className="search-options__text-source-max-length-block">
-                <label className="search-options__text-source-max-length-label">
-                    <span className="search-options__text-source-max-length-label-text">
-                        Максимальная длина
-                    </span>
-                    <input
-                        type="text"
-                        className="search-options__text-source-max-length-input"
-                        placeholder="10k"
-                        value={textSource.maxTextLengthToFetch.count}
-                        onChange={updateMaxLength}
-                    />
-                </label>
-                <select
-                    className="search-options__text-source-max-length-units-select"
-                    value={
-                        textSource.maxTextLengthToFetch.unit == TextLengthUnit.WORD ?
-                            'words' :
-                            'chars'
-                    }
-                    onChange={updateLengthUnit}
-                >
-                    <option
-                        className="search-options__text-source-max-length-unit-option"
-                        ref={wordUnitOptionRef}
-                        value="words"
-                    >
-                        слов
-                    </option>
-                    <option
-                        className="search-options__text-source-max-length-unit-option"
-                        ref={charUnitOptionRef}
-                        value="chars"
-                    >
-                        символов
-                    </option>
-                </select>
-            </div>
+            <TextLengthInput
+                className="search-options__text-source-max-length-block"
+                unitsOptions={[ TextLengthUnit.CHAR, TextLengthUnit.WORD, TextLengthUnit.SENTENCE ]}
+                model={textSource.maxTextLengthToFetchInputModel}
+            />
         </div>
     );
 });

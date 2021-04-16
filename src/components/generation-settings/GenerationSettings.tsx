@@ -1,5 +1,9 @@
 import React from 'react';
 
+import TextLengthInput from '@components/text-length-input/TextLengthInput';
+import { TextLengthInputModel } from '@model/TextLengthInputModel';
+import { TextLengthUnit } from '@model/TextLengthInputModel';
+
 const GenerationSettings: React.FunctionComponent = () =>
     <div className="markov-chains-app__generation-settings-block">
         <div className="markov-chains-app__generation-strategy-block">
@@ -42,22 +46,12 @@ const GenerationSettings: React.FunctionComponent = () =>
                 />
             </label>
         </div>
-        <div className="markov-chains-app__output-size-block">
-            <label className="markov-chains-app__output-size-label">
-                <span className="markov-chains-app__output-size-label-text">
-                    Размер выходного текста
-                </span>
-                <input
-                    type="text"
-                    className="markov-chains-app__output-size-input"
-                    placeholder="200"
-                />
-            </label>
-            <select className="markov-chains-app__output-size-units-select">
-                <option className="markov-chains-app__output-size-unit-option">слов</option>
-                <option className="markov-chains-app__output-size-unit-option">символов</option>
-            </select>
-        </div>
+        {/* pass app model here instead */}
+        <TextLengthInput
+            className="markov-chains-app__output-size-block"
+            model={new TextLengthInputModel(200, TextLengthUnit.WORD)}
+            unitsOptions={[ TextLengthUnit.CHAR, TextLengthUnit.WORD, TextLengthUnit.SENTENCE ]}
+        />
     </div>;
 
 export default GenerationSettings;

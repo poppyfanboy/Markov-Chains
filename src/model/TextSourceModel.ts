@@ -1,20 +1,19 @@
-import { DvachFilterGeneric, DvachFilterType, dvachFilterFactory } from './DvachFilterModel';
-import { TextLength, TextLengthUnit } from './util/TextLength';
-
 import { action, computed, makeObservable, observable } from 'mobx';
+
+import { DvachFilterGeneric, DvachFilterType, dvachFilterFactory } from './DvachFilterModel';
+import { TextLengthInputModel, TextLengthUnit } from './TextLengthInputModel';
 
 export class TextSourceModel {
     textContent = '';
-    maxTextLengthToFetch: TextLength = new TextLength(10_000, TextLengthUnit.WORD);
     dvachFilters: DvachFilterGeneric[] = [];
     private _isDvachUrl = false;
     private _isGenericUrl = false;
     private _probability = 1;
+    private _maxTextLengthToFetchInputModel: TextLengthInputModel;
 
     constructor(textContent = '') {
         makeObservable(this, {
             textContent: observable,
-            maxTextLengthToFetch: observable,
             dvachFilters: observable.shallow,
             _isDvachUrl: observable,
             _isGenericUrl: observable,
@@ -27,6 +26,7 @@ export class TextSourceModel {
         } as any);
 
         this.textContent = textContent;
+        this._maxTextLengthToFetchInputModel = new TextLengthInputModel(10000, TextLengthUnit.WORD);
     }
 
     addDvachFilter(type: DvachFilterType): void {
@@ -69,5 +69,9 @@ export class TextSourceModel {
         if (this._isGenericUrl && this._isDvachUrl) {
             this._isDvachUrl = false;
         }
+    }
+
+    get maxTextLengthToFetchInputModel(): TextLengthInputModel {
+        return this._maxTextLengthToFetchInputModel;
     }
 }

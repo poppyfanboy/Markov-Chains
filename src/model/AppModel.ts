@@ -1,4 +1,4 @@
-import { TextLength, TextLengthUnit } from './util/TextLength';
+import { TextLengthUnit } from './TextLengthInputModel';
 
 export enum GenerationStrategy {
     BY_WORDS,
@@ -8,7 +8,6 @@ export enum GenerationStrategy {
 
 export class AppModel {
     generationStrategy: GenerationStrategy = GenerationStrategy.BY_WORDS;
-    generatedTextLength: TextLength = new TextLength(200, TextLengthUnit.WORD);
     private _generatedText: string | null = null;
     private _nGrammsSize = 1;
 
