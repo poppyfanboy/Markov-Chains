@@ -1,8 +1,7 @@
 import './search-options.pcss';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
-import { useCallback } from 'react';
 import { action } from 'mobx';
 
 import { TextSourceModel } from '@model/TextSourceModel';
@@ -15,19 +14,19 @@ import TextLengthInput from '@components/text-length-input/TextLengthInput';
  * сгенерировать новый текст без повторного обращения к источнику.
  */
 const SearchOptions: React.FunctionComponent<{
-    textSource: TextSourceModel;
-}> = observer(({ textSource }) => {
+    textSourceModel: TextSourceModel;
+}> = observer(({ textSourceModel }) => {
     const updateIsDvachUrl = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
-            textSource.setIsDvachUrl(event.target.checked);
+            textSourceModel.setIsDvachUrl(event.target.checked);
         }),
-        [ textSource ],
+        [ textSourceModel ],
     );
     const updateIsGenericUrl = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
-            textSource.setIsGenericUrl(event.target.checked);
+            textSourceModel.setIsGenericUrl(event.target.checked);
         }),
-        [ textSource ],
+        [ textSourceModel ],
     );
 
     return (
@@ -37,7 +36,7 @@ const SearchOptions: React.FunctionComponent<{
                     <input
                         type="checkbox"
                         className="search-options__is-dvach-url-checkbox"
-                        checked={textSource.isDvachUrl}
+                        checked={textSourceModel.isDvachUrl}
                         onChange={updateIsDvachUrl}
                     />
                     <span className="search-options__is-dvach-url-label-text">Ссылка на двач</span>
@@ -48,7 +47,7 @@ const SearchOptions: React.FunctionComponent<{
                     <input
                         type="checkbox"
                         className="search-options__is-generic-url-checkbox"
-                        checked={textSource.isGenericUrl}
+                        checked={textSourceModel.isGenericUrl}
                         onChange={updateIsGenericUrl}
                     />
                     <span className="search-options__is-generic-url-label-text">
@@ -59,7 +58,7 @@ const SearchOptions: React.FunctionComponent<{
             <TextLengthInput
                 className="search-options__text-source-max-length-block"
                 unitsOptions={[ TextLengthUnit.CHAR, TextLengthUnit.WORD, TextLengthUnit.SENTENCE ]}
-                model={textSource.maxTextLengthToFetchInputModel}
+                model={textSourceModel.maxTextLengthToFetchInputModel}
             />
         </div>
     );

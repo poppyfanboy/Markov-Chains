@@ -1,10 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
-import TextSource from '@components/text-source-item/TextSource';
+import TextSource from '@components/text-source/TextSource';
 import { TextSourcesListModel } from '@model/TextSourcesListModel';
-import { TextSourceModel } from '../../model/TextSourceModel';
+import { TextSourceModel } from '@model/TextSourceModel';
 
 const TextSourcesList: React.FunctionComponent<{
     model: TextSourcesListModel;
@@ -28,6 +28,19 @@ const TextSourcesList: React.FunctionComponent<{
         [ model ],
     );
 
+    const evenProbabilitiesBlockRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        if (evenProbabilitiesBlockRef.current == null) {
+            return;
+        }
+        const element = evenProbabilitiesBlockRef.current;
+        if (model.textSources.length > 1) {
+            element.classList.remove('markov-chains-app__even-text-sources-probabilities_hidden');
+        } else {
+            element.classList.add('markov-chains-app__even-text-sources-probabilities_hidden');
+        }
+    }, [ evenProbabilitiesBlockRef.current, model.textSources.length ]);
+
     return (
         <section className="markov-chains-app__text-sources-section">
             <h2 className="markov-chains-app__text-sources-heading">Список источников</h2>
@@ -41,7 +54,10 @@ const TextSourcesList: React.FunctionComponent<{
                     />,
                 )}
             </ul>
-            <div className="markov-chains-app__even-text-sources-probabilities">
+            <div
+                className="markov-chains-app__even-text-sources-probabilities markov-chains-app__even-text-sources-probabilities_hidden"
+                ref={evenProbabilitiesBlockRef}
+            >
                 <button
                     className="markov-chains-app__event-text-sources-probabilities-button"
                     onClick={onEvenProbabilitiesButtonClick}

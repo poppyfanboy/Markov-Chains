@@ -20,7 +20,7 @@ const FilterCombinator: React.FunctionComponent<{
                 filter.combinator = DvachFilterCombinator.OR;
             }
         }),
-        [ filter ],
+        [ filter, andCombinatorRef.current, orCombinatorRef.current ],
     );
 
     return (

@@ -4,13 +4,13 @@ import { TextSourceModel } from './TextSourceModel';
 
 export class TextSourcesListModel {
     textSources: TextSourceModel[] = [];
-    private _step: number;
+    private _probabilityInputStep: number;
 
-    constructor(step: number) {
+    constructor(probabilityInputStep: number) {
         makeObservable(this, {
             textSources: observable.shallow,
         });
-        this._step = step;
+        this._probabilityInputStep = probabilityInputStep;
     }
 
     addNewTextSource(): void {
@@ -21,16 +21,11 @@ export class TextSourcesListModel {
         }
     }
 
-    getTextSource(id: number): TextSourceModel | null {
-        const index = this.textSources.findIndex(textSource => textSource.id == id);
-        return id == -1 ? null : this.textSources[index];
-    }
-
     removeTextSource(id: number): void {
-        let probabilityLost = 0;
+        let lostProbability = 0;
         for (let i = 0; i < this.textSources.length; i++) {
             if (this.textSources[i].id == id) {
-                probabilityLost = this.textSources[i].probability;
+                lostProbability = this.textSources[i].probability;
                 this.textSources.splice(i, 1);
             }
         }
@@ -40,7 +35,7 @@ export class TextSourcesListModel {
         if (this.textSources.length > 1) {
             this.updateProbabilitiesRelativeTo(
                 this.textSources[0],
-                this.textSources[0].probability + probabilityLost,
+                this.textSources[0].probability + lostProbability,
             );
         }
     }
@@ -65,17 +60,23 @@ export class TextSourcesListModel {
                     otherOldPoints -
                     Math.sign(pointsDiff) *
                         Math.floor(Math.abs(pointsDiff * otherOldPoints / otherPointsSum));
-                this.textSources[i].setProbabilityUnsafe(redistributedPoints * this._step);
+                this.textSources[i].setProbabilityUnsafe(
+                    redistributedPoints * this._probabilityInputStep,
+                );
             } else {
                 redistributedPoints =
                     otherOldPoints -
                     Math.sign(pointsDiff) *
                         Math.floor(Math.abs(pointsDiff / (this.textSources.length - 1)));
-                this.textSources[i].setProbabilityUnsafe(redistributedPoints * this._step);
+                this.textSources[i].setProbabilityUnsafe(
+                    redistributedPoints * this._probabilityInputStep,
+                );
             }
             redistributedSum += redistributedPoints;
         }
-        textSourceModel.setProbabilityUnsafe((totalPointsCount - redistributedSum) * this._step);
+        textSourceModel.setProbabilityUnsafe(
+            (totalPointsCount - redistributedSum) * this._probabilityInputStep,
+        );
     }
 
     evenProbabilities(): void {
@@ -83,17 +84,17 @@ export class TextSourcesListModel {
         let pointsLeft = totalPointsCount;
         for (let i = 1; i < this.textSources.length; i++) {
             const points = Math.floor(totalPointsCount / this.textSources.length);
-            this.textSources[i].setProbabilityUnsafe(points * this._step);
+            this.textSources[i].setProbabilityUnsafe(points * this._probabilityInputStep);
             pointsLeft -= points;
         }
-        this.textSources[0].setProbabilityUnsafe(pointsLeft * this._step);
-    }
-
-    private roundToSteps(value: number) {
-        return Math.round(value / this._step);
+        this.textSources[0].setProbabilityUnsafe(pointsLeft * this._probabilityInputStep);
     }
 
     get step(): number {
-        return this._step;
+        return this._probabilityInputStep;
+    }
+
+    private roundToSteps(value: number) {
+        return Math.round(value / this._probabilityInputStep);
     }
 }

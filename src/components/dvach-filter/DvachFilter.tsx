@@ -18,21 +18,38 @@ const DvachFilter: React.FunctionComponent<{
     filter: DvachFilterGeneric;
     onFilterRemove: (filter: DvachFilterGeneric) => void;
 }> = observer(({ filter, onFilterRemove }) => {
-    const onRemoveButtonClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-        // clicking the button tries to do business with the form somehow
-        event.preventDefault();
-        onFilterRemove(filter);
-    }, [ onFilterRemove, filter ]);
+    const onRemoveButtonClick = useCallback(
+        (event: React.MouseEvent<HTMLButtonElement>) => {
+            // clicking the button tries to do business with the form somehow
+            event.preventDefault();
+            onFilterRemove(filter);
+        },
+        [ onFilterRemove, filter ],
+    );
 
     return (
         <li className="dvach-search-filter text-source-item__dvach-search-filter">
             <form>
-                {filter.type == DvachFilterType.IS_THREAD_OP ?
-                    <FilterCheckboxOption
-                        filter={filter as DvachFilterModel<FilterCheckboxOptionModel>}
-                    /> :
-                    <FilterTextOption filter={filter as DvachFilterModel<FilterTextOptionModel>} />
-                }
+                {(() => {
+                    switch (filter.type) {
+                    case DvachFilterType.IS_THREAD_OP:
+                        return (
+                            <FilterCheckboxOption
+                                filter={filter as DvachFilterModel<FilterCheckboxOptionModel>}
+                            />
+                        );
+                    case DvachFilterType.NAME:
+                    case DvachFilterType.TRIPCODE:
+                    case DvachFilterType.POST_CONTAINS_WORDS:
+                        return (
+                            <FilterTextOption
+                                filter={filter as DvachFilterModel<FilterTextOptionModel>}
+                            />
+                        );
+                    default:
+                        return <></>;
+                    }
+                })()}
                 <div className="dvach-search-filter-remove-block">
                     <button
                         className="dvach-search-filter-remove-button"

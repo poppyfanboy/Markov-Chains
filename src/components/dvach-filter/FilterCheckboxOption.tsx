@@ -11,7 +11,7 @@ const FilterCheckboxOption: React.FunctionComponent<{
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             filter.parameter.checked = event.target.checked;
         }),
-        [ filter ],
+        [ filter.parameter ],
     );
 
     return (

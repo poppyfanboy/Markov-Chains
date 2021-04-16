@@ -15,7 +15,7 @@ export class TextSourceModel {
     private _probability = 1;
     private _maxTextLengthToFetchInputModel: TextLengthInputModel;
     private _id: number;
-    private ownerListModel: TextSourcesListModel;
+    private _ownerListModel: TextSourcesListModel;
 
     constructor(ownerListModel: TextSourcesListModel, textContent = '', initialProbability = 0) {
         this._id = textSourceId++;
@@ -36,7 +36,7 @@ export class TextSourceModel {
         } as any);
 
         this.textContent = textContent;
-        this.ownerListModel = ownerListModel;
+        this._ownerListModel = ownerListModel;
         this._probability = Math.max(0, Math.min(1, initialProbability));
         this._maxTextLengthToFetchInputModel = new TextLengthInputModel(10000, TextLengthUnit.WORD);
     }
@@ -58,7 +58,7 @@ export class TextSourceModel {
     }
 
     setProbability(value: number): void {
-        this.ownerListModel.updateProbabilitiesRelativeTo(this, Math.min(Math.max(0, value), 1));
+        this._ownerListModel.updateProbabilitiesRelativeTo(this, Math.min(Math.max(0, value), 1));
     }
 
     setProbabilityUnsafe(value: number): void {
@@ -93,5 +93,9 @@ export class TextSourceModel {
 
     get id(): number {
         return this._id;
+    }
+
+    get ownerListModel(): TextSourcesListModel {
+        return this._ownerListModel;
     }
 }

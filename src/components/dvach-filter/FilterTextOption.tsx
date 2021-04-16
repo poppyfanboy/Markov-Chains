@@ -11,19 +11,19 @@ const FilterTextOption: React.FunctionComponent<{
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             filter.parameter.text = event.target.value;
         }),
-        [ filter ],
+        [ filter.parameter ],
     );
     const updateIsRegex = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             filter.parameter.isRegex = event.target.checked;
         }),
-        [ filter ],
+        [ filter.parameter ],
     );
     const updateIsNegated = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             filter.parameter.isNegated = event.target.checked;
         }),
-        [ filter ],
+        [ filter.parameter ],
     );
 
     return (

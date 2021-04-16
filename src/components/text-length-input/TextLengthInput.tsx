@@ -2,7 +2,7 @@ import { action } from 'mobx';
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 
-import { TextLengthInputModel, mapHtmlValueToTextLengthUnit } from '../../model/TextLengthInputModel';
+import { TextLengthInputModel, mapHtmlValueToTextLengthUnit } from '@model/TextLengthInputModel';
 import {
     TextLengthUnit,
     mapTextLengthUnitToHtmlValue,
