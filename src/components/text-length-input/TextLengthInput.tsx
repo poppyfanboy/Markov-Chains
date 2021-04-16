@@ -18,13 +18,13 @@ const TextLengthInput: React.FunctionComponent<{
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             model.rawCount = event.target.value;
         }),
-        [],
+        [ model ],
     );
     const onLengthUnitChange = useCallback(
         action((event: React.ChangeEvent<HTMLSelectElement>) => {
             model.unit = mapHtmlValueToTextLengthUnit(event.target.value);
         }),
-        [],
+        [ model ],
     );
 
     return (

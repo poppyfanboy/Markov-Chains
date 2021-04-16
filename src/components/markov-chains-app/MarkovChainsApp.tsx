@@ -3,12 +3,12 @@ import './markov-chains-app.pcss';
 import React, { useState } from 'react';
 import { observer } from 'mobx-react';
 
-import TextSource from '@components/text-source-item/TextSource';
 import GenerationSettings from '@components/generation-settings/GenerationSettings';
-import { TextSourceModel } from '@model/TextSourceModel';
+import { TextSourcesListModel } from '@model/TextSourcesListModel';
+import TextSourcesList from '@components/text-sources-list/TextSourcesList';
 
 const MarkovChainsApp: React.FunctionComponent = observer(() => {
-    const [ textSource ] = useState(new TextSourceModel());
+    const [ textSourcesListModel ] = useState(new TextSourcesListModel(0.01));
 
     return (
         <React.Fragment>
@@ -29,17 +29,7 @@ const MarkovChainsApp: React.FunctionComponent = observer(() => {
                     <GenerationSettings />
                 </section>
 
-                <section className="markov-chains-app__text-sources-section">
-                    <h2 className="markov-chains-app__text-sources-heading">Список источников</h2>
-                    <ul className="markov-chains-app__text-sources-list">
-                        <TextSource textSource={textSource} />
-                    </ul>
-                    <div className="markov-chains-app__add-new-text-source">
-                        <button className="markov-chains-app__add-new-text-source-button">
-                            Добавить источник
-                        </button>
-                    </div>
-                </section>
+                <TextSourcesList model={textSourcesListModel} />
             </main>
 
             <footer className="markov-chains-app__footer">

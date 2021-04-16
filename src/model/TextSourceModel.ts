@@ -2,6 +2,10 @@ import { action, computed, makeObservable, observable } from 'mobx';
 
 import { DvachFilterGeneric, DvachFilterType, dvachFilterFactory } from './DvachFilterModel';
 import { TextLengthInputModel, TextLengthUnit } from './TextLengthInputModel';
+import { TextSourcesListModel } from './TextSourcesListModel';
+
+// incremented every time a new text source is created
+let textSourceId = 0;
 
 export class TextSourceModel {
     textContent = '';
@@ -10,8 +14,12 @@ export class TextSourceModel {
     private _isGenericUrl = false;
     private _probability = 1;
     private _maxTextLengthToFetchInputModel: TextLengthInputModel;
+    private _id: number;
+    private ownerListModel: TextSourcesListModel;
 
-    constructor(textContent = '') {
+    constructor(ownerListModel: TextSourcesListModel, textContent = '', initialProbability = 0) {
+        this._id = textSourceId++;
+
         makeObservable(this, {
             textContent: observable,
             dvachFilters: observable.shallow,
@@ -23,9 +31,13 @@ export class TextSourceModel {
             probability: computed,
             addDvachFilter: action,
             removeDvachFilter: action,
+            setProbability: action,
+            setProbabilityUnsafe: action,
         } as any);
 
         this.textContent = textContent;
+        this.ownerListModel = ownerListModel;
+        this._probability = Math.max(0, Math.min(1, initialProbability));
         this._maxTextLengthToFetchInputModel = new TextLengthInputModel(10000, TextLengthUnit.WORD);
     }
 
@@ -46,7 +58,11 @@ export class TextSourceModel {
     }
 
     setProbability(value: number): void {
-        this._probability = Math.min(Math.max(0, value), 1);
+        this.ownerListModel.updateProbabilitiesRelativeTo(this, Math.min(Math.max(0, value), 1));
+    }
+
+    setProbabilityUnsafe(value: number): void {
+        this._probability = value;
     }
 
     get isDvachUrl(): boolean {
@@ -73,5 +89,9 @@ export class TextSourceModel {
 
     get maxTextLengthToFetchInputModel(): TextLengthInputModel {
         return this._maxTextLengthToFetchInputModel;
+    }
+
+    get id(): number {
+        return this._id;
     }
 }
