@@ -7,7 +7,7 @@ import { action } from 'mobx';
 import SearchOptions from '@components/search-options/SearchOptions';
 import { TextSourceModel } from '@model/TextSourceModel';
 import DvachFiltersBlock from '@components/dvach-filters-block/DvachFiltersBlock';
-import GenericUrlFiltersBlock from '@components/generic-url-filters-block/GenericUrlFitersBlock';
+import GenericUrlFiltersBlock from '@components/generic-url-filters-block/GenericUrlFiltersBlock';
 
 const TextSource: React.FunctionComponent<{
     model: TextSourceModel;

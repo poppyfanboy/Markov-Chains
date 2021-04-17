@@ -1,5 +1,5 @@
 import { action } from 'mobx';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { observer } from 'mobx-react';
 
 import { TextLengthInputModel, mapHtmlValueToTextLengthUnit } from '@model/TextLengthInputModel';
@@ -11,7 +11,7 @@ import {
 
 const TextLengthInput: React.FunctionComponent<{
     className: string;
-    unitsOptions: TextLengthUnit[] | null;
+    unitsOptions: TextLengthUnit[];
     model: TextLengthInputModel;
 }> = observer(({ className, unitsOptions, model }) => {
     const onInputTextChange = useCallback(
@@ -25,6 +25,15 @@ const TextLengthInput: React.FunctionComponent<{
             model.unit = mapHtmlValueToTextLengthUnit(event.target.value);
         }),
         [ model ],
+    );
+
+    useEffect(
+        action(() => {
+            if (unitsOptions.findIndex(other => model.unit == other) == -1) {
+                model.unit = unitsOptions?.[0];
+            }
+        }),
+        [ unitsOptions, model ],
     );
 
     return (

@@ -1,12 +1,12 @@
 import './search-options.pcss';
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
 import { TextSourceModel } from '@model/TextSourceModel';
-import { TextLengthUnit } from '@model/TextLengthInputModel';
 import TextLengthInput from '@components/text-length-input/TextLengthInput';
+import { AppContext } from '../markov-chains-app/MarkovChainsApp';
 
 /**
  * Настройки, связанные с содержанием указанного источника. Сюда не входит
@@ -16,6 +16,11 @@ import TextLengthInput from '@components/text-length-input/TextLengthInput';
 const SearchOptions: React.FunctionComponent<{
     textSourceModel: TextSourceModel;
 }> = observer(({ textSourceModel }) => {
+    const appModel = useContext(AppContext);
+    if (appModel == null) {
+        return <></>;
+    }
+
     const updateIsDvachUrl = useCallback(
         action((event: React.ChangeEvent<HTMLInputElement>) => {
             textSourceModel.setIsDvachUrl(event.target.checked);
@@ -57,7 +62,7 @@ const SearchOptions: React.FunctionComponent<{
             </div>
             <TextLengthInput
                 className="search-options__text-source-max-length-block"
-                unitsOptions={[ TextLengthUnit.CHAR, TextLengthUnit.WORD, TextLengthUnit.SENTENCE ]}
+                unitsOptions={appModel.availableTextLengthUnits}
                 model={textSourceModel.maxTextLengthToFetchInputModel}
             />
         </div>

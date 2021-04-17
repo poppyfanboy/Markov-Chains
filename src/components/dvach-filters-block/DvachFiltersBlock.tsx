@@ -31,6 +31,22 @@ const DvachFiltersBlock: React.FunctionComponent<{
         }
     }, [ textSourceModel.isDvachUrl, dvachFiltersBlockRef.current ]);
 
+    const switchCombinatorsBlockRef: React.RefObject<HTMLDivElement> = useRef(null);
+    useEffect(() => {
+        if (switchCombinatorsBlockRef.current == null) {
+            return;
+        }
+        if (textSourceModel.dvachFilters.length > 2) {
+            switchCombinatorsBlockRef.current.classList.remove(
+                'text-source-item__switch-dvach-filters-combinators-block_hidden',
+            );
+        } else {
+            switchCombinatorsBlockRef.current.classList.add(
+                'text-source-item__switch-dvach-filters-combinators-block_hidden',
+            );
+        }
+    }, [ switchCombinatorsBlockRef, textSourceModel.dvachFilters.length ]);
+
     const removeFilter = useCallback(
         action((filter: DvachFilterGeneric) => {
             textSourceModel.removeDvachFilter(filter.id);
@@ -123,7 +139,10 @@ const DvachFiltersBlock: React.FunctionComponent<{
                     Добавить фильтр
                 </button>
             </div>
-            <div className="text-source-item__switch-dvach-filters-combinators-block">
+            <div
+                className="text-source-item__switch-dvach-filters-combinators-block text-source-item__switch-dvach-filters-combinators-block_hidden"
+                ref={switchCombinatorsBlockRef}
+            >
                 <button
                     className="text-source-item__switch-dvach-filters-combinators-button"
                     onClick={toggleFiltersCombinators}
