@@ -1,3 +1,4 @@
+import 'normalize.css';
 import './css/index.pcss';
 
 import React from 'react';
