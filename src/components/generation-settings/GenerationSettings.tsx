@@ -1,6 +1,6 @@
 import './generation-settings.pcss';
 
-import React, { useCallback, useRef, useEffect, useContext } from 'react';
+import React, { useCallback, useRef, useContext } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
@@ -12,6 +12,7 @@ import {
     mapHtmlValueToGenerationStrategy,
 } from '@model/AppModel';
 import { AppContext } from '@components/markov-chains-app/MarkovChainsApp';
+import useHide from '@components/util/useHide';
 
 const GenerationSettings: React.FunctionComponent<{
     className: string | null;
@@ -40,20 +41,12 @@ const GenerationSettings: React.FunctionComponent<{
         [ appModel.setNGrammsSize ],
     );
 
-    useEffect(() => {
-        if (nGramSizeBlockRef.current == null) {
-            return;
-        }
-        if (appModel.generationStrategy == GenerationStrategy.BY_N_GRAMMS) {
-            nGramSizeBlockRef.current.classList.remove(
-                'generation-settings__n-gram-size-block_hidden',
-            );
-        } else {
-            nGramSizeBlockRef.current.classList.add(
-                'generation-settings__n-gram-size-block_hidden',
-            );
-        }
-    }, [ nGramSizeBlockRef.current, appModel.generationStrategy ]);
+    useHide(
+        nGramSizeBlockRef,
+        'generation-settings__n-gram-size-block',
+        () => appModel.generationStrategy != GenerationStrategy.BY_N_GRAMMS,
+        [ appModel.generationStrategy ],
+    );
 
     return (
         <section className={`generation-settings ${className ?? ''}`}>

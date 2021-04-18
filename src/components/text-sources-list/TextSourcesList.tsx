@@ -1,12 +1,13 @@
 import './text-sources-list.pcss';
 
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
 import TextSource from '@components/text-source/TextSource';
 import { TextSourcesListModel } from '@model/TextSourcesListModel';
 import { TextSourceModel } from '@model/TextSourceModel';
+import useHide from '@components/util/useHide';
 
 const TextSourcesList: React.FunctionComponent<{
     className: string | null;
@@ -32,17 +33,12 @@ const TextSourcesList: React.FunctionComponent<{
     );
 
     const evenProbabilitiesBlockRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-        if (evenProbabilitiesBlockRef.current == null) {
-            return;
-        }
-        const element = evenProbabilitiesBlockRef.current;
-        if (model.textSources.length > 1) {
-            element.classList.remove('text-sources-list__even-probabilities-block_hidden');
-        } else {
-            element.classList.add('text-sources-list__even-probabilities-block_hidden');
-        }
-    }, [ evenProbabilitiesBlockRef.current, model.textSources.length ]);
+    useHide(
+        evenProbabilitiesBlockRef,
+        'text-sources-list__even-probabilities-block',
+        () => model.textSources.length <= 1,
+        [ model.textSources.length ],
+    );
 
     return (
         <section className={`text-sources-list ${className ?? ''}`}>

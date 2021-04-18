@@ -6,7 +6,7 @@ import { action } from 'mobx';
 
 import { TextSourceModel } from '@model/TextSourceModel';
 import TextLengthInput from '@components/text-length-input/TextLengthInput';
-import { AppContext } from '../markov-chains-app/MarkovChainsApp';
+import { AppContext } from '@components/markov-chains-app/MarkovChainsApp';
 
 /**
  * Настройки, связанные с содержанием указанного источника. Сюда не входит

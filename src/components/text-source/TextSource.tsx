@@ -1,6 +1,6 @@
 import './text-source.pcss';
 
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
@@ -8,6 +8,7 @@ import SearchOptions from '@components/search-options/SearchOptions';
 import { TextSourceModel } from '@model/TextSourceModel';
 import DvachFiltersBlock from '@components/dvach-filters-block/DvachFiltersBlock';
 import GenericUrlFiltersBlock from '@components/generic-url-filters-block/GenericUrlFiltersBlock';
+import useHide from '@components/util/useHide';
 
 const TextSource: React.FunctionComponent<{
     className: string | null;
@@ -29,16 +30,9 @@ const TextSource: React.FunctionComponent<{
     );
 
     const probabilityBlockRef: React.RefObject<HTMLDivElement> = useRef(null);
-    useEffect(() => {
-        if (probabilityBlockRef.current == null) {
-            return;
-        }
-        if (probabilityInputVisible) {
-            probabilityBlockRef.current.classList.remove('text-source__probability-block_hidden');
-        } else {
-            probabilityBlockRef.current.classList.add('text-source__probability-block_hidden');
-        }
-    }, [ probabilityInputVisible, probabilityBlockRef.current ]);
+    useHide(probabilityBlockRef, 'text-source__probability-block', () => !probabilityInputVisible, [
+        probabilityInputVisible,
+    ]);
 
     const onRemoveButtonClick = useCallback(() => {
         onRemove(model);
@@ -56,6 +50,7 @@ const TextSource: React.FunctionComponent<{
     );
 
     const probabilityStep = model.ownerListModel.step;
+    const probabilityPrecision = Math.floor(Math.log10(1 / probabilityStep));
 
     return (
         <li className={`text-source ${className ?? ''}`}>
@@ -102,11 +97,11 @@ const TextSource: React.FunctionComponent<{
                     <span className="text-source__probability-input-value">
                         {(
                             Math.round(model.probability / probabilityStep) * probabilityStep
-                        ).toFixed(Math.floor(Math.log10(1 / probabilityStep)))}
+                        ).toFixed(probabilityPrecision)}
                     </span>
                 </label>
             </div>
-            <SearchOptions textSourceModel={model} />
+            <SearchOptions className="text-source__search-options" textSourceModel={model} />
             <DvachFiltersBlock
                 className="text-source__dvach-filters-block"
                 textSourceModel={model}

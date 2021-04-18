@@ -1,6 +1,6 @@
 import './dvach-filters-block.pcss';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
 
@@ -13,38 +13,24 @@ import {
     mapHtmlValueToFilterType,
 } from '@model/DvachFilterModel';
 import { TextSourceModel } from '@model/TextSourceModel';
+import useHide from '@components/util/useHide';
 
 const DvachFiltersBlock: React.FunctionComponent<{
     className: string | null;
     textSourceModel: TextSourceModel;
 }> = observer(({ className, textSourceModel }) => {
     const dvachFiltersBlockRef: React.RefObject<HTMLDivElement> = useRef(null);
-    useEffect(() => {
-        if (dvachFiltersBlockRef.current == null) {
-            return;
-        }
-        if (textSourceModel.isDvachUrl) {
-            dvachFiltersBlockRef.current.classList.remove('dvach-filters-block_hidden');
-        } else {
-            dvachFiltersBlockRef.current.classList.add('dvach-filters-block_hidden');
-        }
-    }, [ textSourceModel.isDvachUrl, dvachFiltersBlockRef.current ]);
+    useHide(dvachFiltersBlockRef, 'dvach-filters-block', () => !textSourceModel.isDvachUrl, [
+        textSourceModel.isDvachUrl,
+    ]);
 
-    const switchCombinatorsBlockRef: React.RefObject<HTMLDivElement> = useRef(null);
-    useEffect(() => {
-        if (switchCombinatorsBlockRef.current == null) {
-            return;
-        }
-        if (textSourceModel.dvachFilters.length > 2) {
-            switchCombinatorsBlockRef.current.classList.remove(
-                'dvach-filters-block__toggle-combinators-block_hidden',
-            );
-        } else {
-            switchCombinatorsBlockRef.current.classList.add(
-                'dvach-filters-block__toggle-combinators-block_hidden',
-            );
-        }
-    }, [ switchCombinatorsBlockRef, textSourceModel.dvachFilters.length ]);
+    const toggleCombinatorsBlockRef: React.RefObject<HTMLDivElement> = useRef(null);
+    useHide(
+        toggleCombinatorsBlockRef,
+        'dvach-filters-block__toggle-combinators-block',
+        () => textSourceModel.dvachFilters.length <= 2,
+        [ textSourceModel.dvachFilters.length ],
+    );
 
     const removeFilter = useCallback(
         action((filter: DvachFilterGeneric) => {
@@ -136,16 +122,13 @@ const DvachFiltersBlock: React.FunctionComponent<{
                 </option>
             </select>
             <div className="dvach-filters-block__add-block">
-                <button
-                    className="dvach-filters-block__add-button"
-                    onClick={addNewFilter}
-                >
+                <button className="dvach-filters-block__add-button" onClick={addNewFilter}>
                     Добавить фильтр
                 </button>
             </div>
             <div
                 className="dvach-filters-block__toggle-combinators-block dvach-filters-block__toggle-combinators-block_hidden"
-                ref={switchCombinatorsBlockRef}
+                ref={toggleCombinatorsBlockRef}
             >
                 <button
                     className="dvach-filters-block__toggle-combinators-button"
