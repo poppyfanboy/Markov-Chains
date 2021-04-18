@@ -1,3 +1,5 @@
+import './filter-combinator.pcss';
+
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useCallback, useRef } from 'react';
@@ -5,8 +7,9 @@ import React, { useCallback, useRef } from 'react';
 import { DvachFilterCombinator, DvachFilterGeneric } from '@model/DvachFilterModel';
 
 const FilterCombinator: React.FunctionComponent<{
+    className: string | null;
     filter: DvachFilterGeneric;
-}> = observer(({ filter }) => {
+}> = observer(({ className, filter }) => {
     const andCombinatorRef: React.RefObject<HTMLInputElement> = useRef(null);
     const orCombinatorRef: React.RefObject<HTMLInputElement> = useRef(null);
     const updateCombinator = useCallback(
@@ -24,28 +27,28 @@ const FilterCombinator: React.FunctionComponent<{
     );
 
     return (
-        <div className="dvach-search-filter__combinator-block">
-            <label className="dvach-search-filter__combinator-label">
+        <div className={`filter-combinator ${className ?? ''}`}>
+            <label className="filter-combinator__label">
                 <input
                     type="radio"
-                    name="dvach-search-filter-combinator"
-                    className="dvach-search-filter__combinator-input"
+                    name="dvach-filter-combinator"
+                    className="filter-combinator__radio"
                     checked={filter.combinator == DvachFilterCombinator.AND}
                     onChange={updateCombinator}
                     ref={andCombinatorRef}
                 />
-                <span className="dvach-search-filter__combinator-label-text">И</span>
+                <span className="filter-combinator__label-text">И</span>
             </label>
-            <label className="dvach-search-filter__combinator-label">
+            <label className="filter-combinator__label">
                 <input
                     type="radio"
-                    name="dvach-search-filter-combinator"
-                    className="dvach-search-filter__combinator-input"
+                    name="dvach-filter-combinator"
+                    className="filter-combinator__radio"
                     checked={filter.combinator == DvachFilterCombinator.OR}
                     onChange={updateCombinator}
                     ref={orCombinatorRef}
                 />
-                <span className="dvach-search-filter__combinator-label-text">ИЛИ</span>
+                <span className="filter-combinator__label-text">ИЛИ</span>
             </label>
         </div>
     );

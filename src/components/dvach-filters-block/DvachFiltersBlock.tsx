@@ -1,3 +1,5 @@
+import './dvach-filters-block.pcss';
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
@@ -13,21 +15,18 @@ import {
 import { TextSourceModel } from '@model/TextSourceModel';
 
 const DvachFiltersBlock: React.FunctionComponent<{
+    className: string | null;
     textSourceModel: TextSourceModel;
-}> = observer(({ textSourceModel }) => {
+}> = observer(({ className, textSourceModel }) => {
     const dvachFiltersBlockRef: React.RefObject<HTMLDivElement> = useRef(null);
     useEffect(() => {
         if (dvachFiltersBlockRef.current == null) {
             return;
         }
         if (textSourceModel.isDvachUrl) {
-            dvachFiltersBlockRef.current.classList.remove(
-                'text-source-item__dvach-search-filters-block_hidden',
-            );
+            dvachFiltersBlockRef.current.classList.remove('dvach-filters-block_hidden');
         } else {
-            dvachFiltersBlockRef.current.classList.add(
-                'text-source-item__dvach-search-filters-block_hidden',
-            );
+            dvachFiltersBlockRef.current.classList.add('dvach-filters-block_hidden');
         }
     }, [ textSourceModel.isDvachUrl, dvachFiltersBlockRef.current ]);
 
@@ -38,11 +37,11 @@ const DvachFiltersBlock: React.FunctionComponent<{
         }
         if (textSourceModel.dvachFilters.length > 2) {
             switchCombinatorsBlockRef.current.classList.remove(
-                'text-source-item__switch-dvach-filters-combinators-block_hidden',
+                'dvach-filters-block__toggle-combinators-block_hidden',
             );
         } else {
             switchCombinatorsBlockRef.current.classList.add(
-                'text-source-item__switch-dvach-filters-combinators-block_hidden',
+                'dvach-filters-block__toggle-combinators-block_hidden',
             );
         }
     }, [ switchCombinatorsBlockRef, textSourceModel.dvachFilters.length ]);
@@ -105,46 +104,51 @@ const DvachFiltersBlock: React.FunctionComponent<{
 
     return (
         <div
-            className="text-source-item__dvach-search-filters-block text-source-item__dvach-search-filters-block_hidden"
+            className={`dvach-filters-block dvach-filters-block_hidden ${className ?? ''}`}
             ref={dvachFiltersBlockRef}
         >
-            <ul className="text-source-item__dvach-search-filters-list">
+            <ul className="dvach-filters-block__list">
                 {textSourceModel.dvachFilters.map(filter =>
-                    <DvachFilter filter={filter} key={filter.id} onFilterRemove={removeFilter} />,
+                    <DvachFilter
+                        filter={filter}
+                        key={filter.id}
+                        onFilterRemove={removeFilter}
+                        className="dvach-filters-block__dvach-filter"
+                    />,
                 )}
             </ul>
             <select
-                className="text-source-item__dvach-filter-select"
+                className="dvach-filters-block__type-select"
                 value={mapFilterTypeToHtmlValue(filterToAdd)}
                 onChange={updateFilterToAdd}
             >
-                <option className="text-source-item__dvach-filter-option" value="name">
+                <option className="dvach-filters-block__type-option" value="name">
                     Имя
                 </option>
-                <option className="text-source-item__dvach-filter-option" value="tripcode">
+                <option className="dvach-filters-block__type-option" value="tripcode">
                     Трипкод
                 </option>
-                <option className="text-source-item__dvach-filter-option" value="is-op">
+                <option className="dvach-filters-block__type-option" value="is-op">
                     ОП треда
                 </option>
-                <option className="text-source-item__dvach-filter-option" value="contains-words">
+                <option className="dvach-filters-block__type-option" value="contains-words">
                     (Не) содержит слова
                 </option>
             </select>
-            <div className="text-source-item__add-dvach-filter-block">
+            <div className="dvach-filters-block__add-block">
                 <button
-                    className="text-source-item__add-dvach-filter-button"
+                    className="dvach-filters-block__add-button"
                     onClick={addNewFilter}
                 >
                     Добавить фильтр
                 </button>
             </div>
             <div
-                className="text-source-item__switch-dvach-filters-combinators-block text-source-item__switch-dvach-filters-combinators-block_hidden"
+                className="dvach-filters-block__toggle-combinators-block dvach-filters-block__toggle-combinators-block_hidden"
                 ref={switchCombinatorsBlockRef}
             >
                 <button
-                    className="text-source-item__switch-dvach-filters-combinators-button"
+                    className="dvach-filters-block__toggle-combinators-button"
                     onClick={toggleFiltersCombinators}
                 >
                     Соответствие по всем фильтрам / Соответствие хотя бы по одному фильтру

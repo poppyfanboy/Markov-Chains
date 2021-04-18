@@ -14,8 +14,9 @@ import { AppContext } from '../markov-chains-app/MarkovChainsApp';
  * сгенерировать новый текст без повторного обращения к источнику.
  */
 const SearchOptions: React.FunctionComponent<{
+    className: string | null;
     textSourceModel: TextSourceModel;
-}> = observer(({ textSourceModel }) => {
+}> = observer(({ className, textSourceModel }) => {
     const appModel = useContext(AppContext);
     if (appModel == null) {
         return <></>;
@@ -35,7 +36,7 @@ const SearchOptions: React.FunctionComponent<{
     );
 
     return (
-        <div className="search-options text-source-item__search-options">
+        <div className={`search-options ${className ?? ''}`}>
             <div className="search-options__is-dvach-url-block">
                 <label className="search-options__is-dvach-url-label">
                     <input

@@ -1,4 +1,4 @@
-import './dvach-search-filter.pcss';
+import './dvach-filter.pcss';
 
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
@@ -17,7 +17,8 @@ import FilterCombinator from './FilterCombinator';
 const DvachFilter: React.FunctionComponent<{
     filter: DvachFilterGeneric;
     onFilterRemove: (filter: DvachFilterGeneric) => void;
-}> = observer(({ filter, onFilterRemove }) => {
+    className: string | null;
+}> = observer(({ filter, onFilterRemove, className }) => {
     const onRemoveButtonClick = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>) => {
             // clicking the button tries to do business with the form somehow
@@ -28,13 +29,14 @@ const DvachFilter: React.FunctionComponent<{
     );
 
     return (
-        <li className="dvach-search-filter text-source-item__dvach-search-filter">
+        <li className={`dvach-filter ${className ?? ''}`}>
             <form>
                 {(() => {
                     switch (filter.type) {
                     case DvachFilterType.IS_THREAD_OP:
                         return (
                             <FilterCheckboxOption
+                                className="dvach-filter__option-block"
                                 filter={filter as DvachFilterModel<FilterCheckboxOptionModel>}
                             />
                         );
@@ -43,6 +45,7 @@ const DvachFilter: React.FunctionComponent<{
                     case DvachFilterType.POST_CONTAINS_WORDS:
                         return (
                             <FilterTextOption
+                                className="dvach-filter__option-block"
                                 filter={filter as DvachFilterModel<FilterTextOptionModel>}
                             />
                         );
@@ -50,15 +53,15 @@ const DvachFilter: React.FunctionComponent<{
                         return <></>;
                     }
                 })()}
-                <div className="dvach-search-filter-remove-block">
+                <div className="dvach-filter__remove-block">
                     <button
-                        className="dvach-search-filter-remove-button"
+                        className="dvach-filter__remove-button"
                         onClick={onRemoveButtonClick}
                     >
                         Удалить фильтр
                     </button>
                 </div>
-                <FilterCombinator filter={filter} />
+                <FilterCombinator className="dvach-filter__filter-combinator" filter={filter} />
             </form>
         </li>
     );

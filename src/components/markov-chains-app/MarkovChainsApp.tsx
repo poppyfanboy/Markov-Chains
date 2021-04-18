@@ -27,7 +27,9 @@ const MarkovChainsApp: React.FunctionComponent = observer(() => {
             </header>
 
             <main className="markov-chains-app__main-content">
-                <div className="markov-chains-app__generated-text-block">{appModel.generatedText}</div>
+                <div className="markov-chains-app__generated-text-block">
+                    {appModel.generatedText}
+                </div>
                 <div className="markov-chains-app__generate-text-block">
                     <button
                         className="markov-chains-app__generate-text-button"
@@ -36,14 +38,15 @@ const MarkovChainsApp: React.FunctionComponent = observer(() => {
                         Сгенерировать текст
                     </button>
                 </div>
-                <GenerationSettings />
-                <TextSourcesList model={appModel.sourcesListModel} />
+                <GenerationSettings className="markov-chains-app__generation-settings" />
+                <TextSourcesList
+                    className="markov-chains-app__text-sources-list"
+                    model={appModel.sourcesListModel}
+                />
             </main>
 
             <footer className="markov-chains-app__footer">
-                <div className="markov-chains-app__help-block">
-                    Какая-то информация в футере, не знаю.
-                </div>
+                Какая-то информация в футере, не знаю.
             </footer>
         </AppContext.Provider>
     );

@@ -1,17 +1,21 @@
+import './generation-settings.pcss';
+
 import React, { useCallback, useRef, useEffect, useContext } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
 import TextLengthInput from '@components/text-length-input/TextLengthInput';
-import { GenerationStrategy } from '../../model/AppModel';
 import {
+    GenerationStrategy,
     mapGenerationStrategyToHumanName,
     mapGenerationStrategyToHtmlValue,
     mapHtmlValueToGenerationStrategy,
 } from '@model/AppModel';
 import { AppContext } from '@components/markov-chains-app/MarkovChainsApp';
 
-const GenerationSettings: React.FunctionComponent = observer(() => {
+const GenerationSettings: React.FunctionComponent<{
+    className: string | null;
+}> = observer(({ className }) => {
     const appModel = useContext(AppContext);
     if (appModel == null) {
         return <></>;
@@ -42,45 +46,47 @@ const GenerationSettings: React.FunctionComponent = observer(() => {
         }
         if (appModel.generationStrategy == GenerationStrategy.BY_N_GRAMMS) {
             nGramSizeBlockRef.current.classList.remove(
-                'markov-chains-app__n-gram-size-block_hidden',
+                'generation-settings__n-gram-size-block_hidden',
             );
         } else {
-            nGramSizeBlockRef.current.classList.add('markov-chains-app__n-gram-size-block_hidden');
+            nGramSizeBlockRef.current.classList.add(
+                'generation-settings__n-gram-size-block_hidden',
+            );
         }
     }, [ nGramSizeBlockRef.current, appModel.generationStrategy ]);
 
     return (
-        <section className="markov-chains-app__main-controls-section">
-            <h2 className="markov-chains-app__main-controls-heading">Настройки генерации</h2>
-            <div className="markov-chains-app__generation-settings-block">
-                <div className="markov-chains-app__generation-strategy-block">
+        <section className={`generation-settings ${className ?? ''}`}>
+            <h2 className="generation-settings__heading">Настройки генерации</h2>
+            <div className="generation-settings__main-block">
+                <div className="generation-settings__strategy-selection-block">
                     {appModel.generationStrategiesList.map((strategy, index) =>
-                        <label className="markov-chains-app__generation-strategy-label" key={index}>
+                        <label className="generation-settings__strategy-label" key={index}>
                             <input
+                                className="generation-settings__strategy-input"
                                 name="generation-strategy"
                                 type="radio"
-                                className="markov-chains-app__generation-strategy-input"
                                 value={mapGenerationStrategyToHtmlValue(strategy)}
                                 checked={appModel.generationStrategy == strategy}
                                 onChange={onGenerationStrategyChange}
                             />
-                            <span className="markov-chains-app__generation-strategy-name">
+                            <span className="generation-settings__strategy-label-text">
                                 {mapGenerationStrategyToHumanName(strategy)}
                             </span>
                         </label>,
                     )}
                 </div>
                 <div
-                    className="markov-chains-app__n-gram-size-block markov-chains-app__n-gram-size-block_hidden"
+                    className="generation-settings__n-gram-size-block generation-settings__n-gram-size-block_hidden"
                     ref={nGramSizeBlockRef}
                 >
-                    <label className="markov-chains-app__n-gram-size-label">
-                        <span className="markov-chains-app__n-gram-size-label-text">
+                    <label className="generation-settings__n-gram-size-label">
+                        <span className="generation-settings__n-gram-size-label-text">
                             Размер N-грамм (в символах)
                         </span>
                         <input
                             type="number"
-                            className="markov-chains-app__n-gram-size-input"
+                            className="generation-settings__n-gram-size-input"
                             min={1}
                             value={appModel.nGrammsSize}
                             onChange={onNGrammsSizeChange}
@@ -88,7 +94,7 @@ const GenerationSettings: React.FunctionComponent = observer(() => {
                     </label>
                 </div>
                 <TextLengthInput
-                    className="markov-chains-app__output-size-block"
+                    className="generation-settings__text-length-input"
                     model={appModel.generatedTextLengthInputModel}
                     unitsOptions={appModel.availableTextLengthUnits}
                 />

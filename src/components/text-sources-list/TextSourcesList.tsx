@@ -1,3 +1,5 @@
+import './text-sources-list.pcss';
+
 import React, { useCallback, useRef, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
@@ -7,8 +9,9 @@ import { TextSourcesListModel } from '@model/TextSourcesListModel';
 import { TextSourceModel } from '@model/TextSourceModel';
 
 const TextSourcesList: React.FunctionComponent<{
+    className: string | null;
     model: TextSourcesListModel;
-}> = observer(({ model }) => {
+}> = observer(({ className, model }) => {
     const onAddNewSourceButtonClick = useCallback(
         action(() => {
             model.addNewTextSource();
@@ -35,18 +38,19 @@ const TextSourcesList: React.FunctionComponent<{
         }
         const element = evenProbabilitiesBlockRef.current;
         if (model.textSources.length > 1) {
-            element.classList.remove('markov-chains-app__even-text-sources-probabilities_hidden');
+            element.classList.remove('text-sources-list__even-probabilities-block_hidden');
         } else {
-            element.classList.add('markov-chains-app__even-text-sources-probabilities_hidden');
+            element.classList.add('text-sources-list__even-probabilities-block_hidden');
         }
     }, [ evenProbabilitiesBlockRef.current, model.textSources.length ]);
 
     return (
-        <section className="markov-chains-app__text-sources-section">
-            <h2 className="markov-chains-app__text-sources-heading">Список источников</h2>
-            <ul className="markov-chains-app__text-sources-list">
+        <section className={`text-sources-list ${className ?? ''}`}>
+            <h2 className="text-sources-list__heading">Список источников</h2>
+            <ul className="text-sources-list__list">
                 {model.textSources.map(textSourceModel =>
                     <TextSource
+                        className="text-sources-list__text-source"
                         model={textSourceModel}
                         probabilityInputVisible={model.textSources.length > 1}
                         key={textSourceModel.id}
@@ -55,19 +59,19 @@ const TextSourcesList: React.FunctionComponent<{
                 )}
             </ul>
             <div
-                className="markov-chains-app__even-text-sources-probabilities markov-chains-app__even-text-sources-probabilities_hidden"
+                className="text-sources-list__even-probabilities-block text-sources-list__even-probabilities-block_hidden"
                 ref={evenProbabilitiesBlockRef}
             >
                 <button
-                    className="markov-chains-app__event-text-sources-probabilities-button"
+                    className="text-sources-list__even-probabilities-button"
                     onClick={onEvenProbabilitiesButtonClick}
                 >
                     Выровнять вероятности источников
                 </button>
             </div>
-            <div className="markov-chains-app__add-new-text-source">
+            <div className="text-sources-list__add-new-text-source-block">
                 <button
-                    className="markov-chains-app__add-new-text-source-button"
+                    className="text-sources-list__add-new-text-source-button"
                     onClick={onAddNewSourceButtonClick}
                 >
                     Добавить источник

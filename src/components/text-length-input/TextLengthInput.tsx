@@ -1,3 +1,5 @@
+import './text-length-input.pcss';
+
 import { action } from 'mobx';
 import React, { useCallback, useEffect } from 'react';
 import { observer } from 'mobx-react';
@@ -38,26 +40,26 @@ const TextLengthInput: React.FunctionComponent<{
 
     return (
         <div className={`text-length-input ${className ?? ''}`}>
-            <label className="text-length-input__text-source-max-length-label">
-                <span className="text-length-input__text-source-max-length-label-text">
+            <label className="text-length-input__label">
+                <span className="text-length-input__label-text">
                     Максимальная длина
                 </span>
                 <input
                     type="text"
-                    className="text-length-input__text-source-max-length-input"
+                    className="text-length-input__input"
                     onChange={onInputTextChange}
                     value={model.rawCount ?? ''}
                     placeholder={`${model.count }`}
                 />
             </label>
             <select
-                className="text-length-input__text-source-max-length-units-select"
+                className="text-length-input__unit-select"
                 onChange={onLengthUnitChange}
                 value={mapTextLengthUnitToHtmlValue(model.unit)}
             >
                 {unitsOptions?.map(lengthUnit =>
                     <option
-                        className="text-length-input__text-source-max-length-unit-option"
+                        className="text-length-input__unit-option"
                         value={mapTextLengthUnitToHtmlValue(lengthUnit)}
                         key={mapTextLengthUnitToHtmlValue(lengthUnit)}
                     >
