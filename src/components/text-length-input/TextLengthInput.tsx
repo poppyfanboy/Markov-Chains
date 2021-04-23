@@ -4,12 +4,12 @@ import { action } from 'mobx';
 import React, { useCallback, useEffect } from 'react';
 import { observer } from 'mobx-react';
 
-import { TextLengthInputModel, mapHtmlValueToTextLengthUnit } from '@model/TextLengthInputModel';
+import { TextLengthInputModel, mapHtmlValueToTextLengthUnit } from '@models/TextLengthInputModel';
 import {
     TextLengthUnit,
     mapTextLengthUnitToHtmlValue,
     mapTextLengthUnitToHumanString,
-} from '@model/TextLengthInputModel';
+} from '@models/TextLengthInputModel';
 
 const TextLengthInput: React.FunctionComponent<{
     className: string;

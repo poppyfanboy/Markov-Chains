@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
 import SearchOptions from '@components/search-options/SearchOptions';
-import { TextSourceModel } from '@model/TextSourceModel';
+import { TextSourceModel } from '@models/TextSourceModel';
 import DvachFiltersBlock from '@components/dvach-filters-block/DvachFiltersBlock';
 import GenericUrlFiltersBlock from '@components/generic-url-filters-block/GenericUrlFiltersBlock';
 import useHide from '@components/util/useHide';

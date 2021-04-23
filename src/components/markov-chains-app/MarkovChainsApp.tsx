@@ -6,7 +6,7 @@ import { action } from 'mobx';
 
 import GenerationSettings from '@components/generation-settings/GenerationSettings';
 import TextSourcesList from '@components/text-sources-list/TextSourcesList';
-import { AppModel } from '@model/AppModel';
+import { AppModel } from '@models/AppModel';
 
 export const AppContext = createContext<AppModel | null>(null);
 

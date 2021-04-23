@@ -3,7 +3,7 @@ import './generic-url-filters-block.pcss';
 import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
 
-import { TextSourceModel } from '@model/TextSourceModel';
+import { TextSourceModel } from '@models/TextSourceModel';
 import useHide from '@components/util/useHide';
 
 const GenericUrlFiltersBlock: React.FunctionComponent<{

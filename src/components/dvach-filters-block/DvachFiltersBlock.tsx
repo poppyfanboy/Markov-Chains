@@ -11,8 +11,8 @@ import {
     DvachFilterType,
     mapFilterTypeToHtmlValue,
     mapHtmlValueToFilterType,
-} from '@model/DvachFilterModel';
-import { TextSourceModel } from '@model/TextSourceModel';
+} from '@models/DvachFilterModel';
+import { TextSourceModel } from '@models/TextSourceModel';
 import useHide from '@components/util/useHide';
 
 const DvachFiltersBlock: React.FunctionComponent<{

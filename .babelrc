@@ -20,8 +20,10 @@
             {
                 "root": ["./"],
                 "alias": {
-                    "@model": "./src/model",
-                    "@components": "./src/components"
+                    "@models": "./src/models",
+                    "@components": "./src/components",
+                    "@controllers": "./src/controllers",
+                    "@ts": "./src/ts"
                 }
             }
         ]

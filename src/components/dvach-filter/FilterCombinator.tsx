@@ -4,7 +4,7 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import React, { useCallback, useRef } from 'react';
 
-import { DvachFilterCombinator, DvachFilterGeneric } from '@model/DvachFilterModel';
+import { DvachFilterCombinator, DvachFilterGeneric } from '@models/DvachFilterModel';
 
 const FilterCombinator: React.FunctionComponent<{
     className: string | null;

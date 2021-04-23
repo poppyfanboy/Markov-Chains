@@ -5,8 +5,8 @@ import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
 import TextSource from '@components/text-source/TextSource';
-import { TextSourcesListModel } from '@model/TextSourcesListModel';
-import { TextSourceModel } from '@model/TextSourceModel';
+import { TextSourcesListModel } from '@models/TextSourcesListModel';
+import { TextSourceModel } from '@models/TextSourceModel';
 import useHide from '@components/util/useHide';
 
 const TextSourcesList: React.FunctionComponent<{

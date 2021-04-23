@@ -9,7 +9,7 @@ import {
     DvachFilterModel,
     FilterTextOptionModel,
     FilterCheckboxOptionModel,
-} from '@model/DvachFilterModel';
+} from '@models/DvachFilterModel';
 import FilterCheckboxOption from './FilterCheckboxOption';
 import FilterTextOption from './FilterTextOption';
 import FilterCombinator from './FilterCombinator';

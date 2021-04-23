@@ -4,7 +4,7 @@ import React, { useCallback, useContext } from 'react';
 import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
-import { TextSourceModel } from '@model/TextSourceModel';
+import { TextSourceModel } from '@models/TextSourceModel';
 import TextLengthInput from '@components/text-length-input/TextLengthInput';
 import { AppContext } from '@components/markov-chains-app/MarkovChainsApp';
 

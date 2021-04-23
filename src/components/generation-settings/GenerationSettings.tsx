@@ -10,7 +10,7 @@ import {
     mapGenerationStrategyToHumanName,
     mapGenerationStrategyToHtmlValue,
     mapHtmlValueToGenerationStrategy,
-} from '@model/AppModel';
+} from '@models/AppModel';
 import { AppContext } from '@components/markov-chains-app/MarkovChainsApp';
 import useHide from '@components/util/useHide';
 
